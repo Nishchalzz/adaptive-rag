@@ -1,0 +1,974 @@
+{
+  "name": "musique_eval",
+  "source": "MuSiQue v1.0 dev (answerable), https://github.com/StonyBrookNLP/musique",
+  "seed": 13,
+  "n_test_per_group": 12,
+  "n_dev_per_group": 5,
+  "corpus": "musique_eval",
+  "corpus_size": 954,
+  "counts": {
+    "simple/dev": 5,
+    "simple/test": 12,
+    "moderate/dev": 5,
+    "moderate/test": 12,
+    "complex/dev": 5,
+    "complex/test": 12
+  },
+  "hops": {
+    "complex:3": 10,
+    "complex:4": 7,
+    "moderate:2": 17,
+    "simple:1": 17
+  },
+  "questions": [
+    {
+      "group": "complex",
+      "source_id": "3hop1__239036_15840_36002",
+      "question": "What were the Genesis's advantages over the platform of Xexys?",
+      "answer": "built on 16-bit architectures and offered improved graphics and sound",
+      "aliases": [
+        "16-bit",
+        "16-bit architecture"
+      ],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-a2596ef2d8da",
+        "mq-b1c09becc513",
+        "mq-e1260e3a017c"
+      ],
+      "gold_titles": [
+        "Nintendo Entertainment System",
+        "Super Nintendo Entertainment System",
+        "Xexyz"
+      ],
+      "split": "test",
+      "qid": "com034"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__446612_160545_62931",
+      "question": "Where was the film The Beach filmed in the country where Ercole Manfredi died?",
+      "answer": "island Koh Phi Phi",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-1a02703c7683",
+        "mq-6a88de6baa36",
+        "mq-ea0e88cd5af0"
+      ],
+      "gold_titles": [
+        "Bang Bon District",
+        "Ercole Manfredi",
+        "The Beach (film)"
+      ],
+      "split": "test",
+      "qid": "com035"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__465684_160545_62931",
+      "question": "Where in the country where Bodindecha was born was The Beach filmed?",
+      "answer": "island Koh Phi Phi",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-0eb3bfbf298b",
+        "mq-6a88de6baa36",
+        "mq-ea0e88cd5af0"
+      ],
+      "gold_titles": [
+        "Bang Bon District",
+        "Bodindecha",
+        "The Beach (film)"
+      ],
+      "split": "test",
+      "qid": "com036"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__786632_831637_91775",
+      "question": "What does seal stand for in the U.S. military branch that operates destroyers, as well as the USS Edsall?",
+      "answer": "Sea, Air, and Land",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-02f2ff6d9a57",
+        "mq-8034e60d1fc7",
+        "mq-f3dad04276bc"
+      ],
+      "gold_titles": [
+        "List of destroyer classes of the United States Navy",
+        "USS Edsall (DE-129)",
+        "United States Navy SEALs"
+      ],
+      "split": "test",
+      "qid": "com037"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__848113_15840_36014",
+      "question": "What was Nintendo's limit on games per developer per year on the abbreviation of the platform of Star Voyager?",
+      "answer": "five",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-266d9af7403c",
+        "mq-9f14b070c948",
+        "mq-a2596ef2d8da"
+      ],
+      "gold_titles": [
+        "Nintendo Entertainment System",
+        "Star Voyager",
+        "Super Nintendo Entertainment System"
+      ],
+      "split": "dev",
+      "qid": "com038"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__857_846_7791",
+      "question": "How many parties rule the city where the Yongle emperor greeted the person to whom the edict was addressed?",
+      "answer": "one-party",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-5a29f1bf164c",
+        "mq-687623cb1471",
+        "mq-d58c0cd43561"
+      ],
+      "gold_titles": [
+        "Nanjing",
+        "Sino-Tibetan relations during the Ming dynasty"
+      ],
+      "split": "test",
+      "qid": "com039"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop1__9285_5188_86687",
+      "question": "When did the country the top-ranking Warsaw Pact operatives came from, despite it being headquartered in the country known as the nobilities commonwealth, agree to a unified Germany inside NATO?",
+      "answer": "May 1990",
+      "aliases": [
+        "1990"
+      ],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-436bd9ec9797",
+        "mq-a9552c09bcad",
+        "mq-c799cb3dd7d9"
+      ],
+      "gold_titles": [
+        "German reunification",
+        "Szlachta",
+        "Warsaw Pact"
+      ],
+      "split": "dev",
+      "qid": "com040"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop2__304722_582839_63959",
+      "question": "When was the last time the team employing Ronnie Morris beat the 1894-95 FA Cup winner?",
+      "answer": "1 December 2010",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-aeb33c51edd9",
+        "mq-aec3d863ed9b",
+        "mq-c2a00adaf4be"
+      ],
+      "gold_titles": [
+        "1894–95 FA Cup",
+        "Ronnie Morris (footballer)",
+        "Second City derby"
+      ],
+      "split": "test",
+      "qid": "com041"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop2__87184_92991_76291",
+      "question": "When did the party that controls the House of Representatives take control of the branch who determines the rules of the US house and Senate?",
+      "answer": "January 2015",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-5bdaa69edf4b",
+        "mq-8aa9d35259db",
+        "mq-a6ef33a291b2"
+      ],
+      "gold_titles": [
+        "114th United States Congress",
+        "2014 United States Senate elections",
+        "Standing Rules of the United States Senate"
+      ],
+      "split": "test",
+      "qid": "com042"
+    },
+    {
+      "group": "complex",
+      "source_id": "3hop2__90098_91678_10557",
+      "question": "What was the language from which the last name Sylvester originated during the era of the person crowned first Holy Roman Emperor later known as?",
+      "answer": "Medieval Latin",
+      "aliases": [],
+      "hops": 3,
+      "gold_chunk_ids": [
+        "mq-0e135733d68a",
+        "mq-53b72e976186",
+        "mq-ca1da94552b3"
+      ],
+      "gold_titles": [
+        "Holy Roman Emperor",
+        "Middle Ages",
+        "Sylvester"
+      ],
+      "split": "test",
+      "qid": "com043"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop1__47210_53706_795904_580996",
+      "question": "What location borders the city founded by a former newspaper publisher selling supplies in the state where the valley girl accent originated?",
+      "answer": "Rio Linda",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-3486490828b7",
+        "mq-6b7fbb30d453",
+        "mq-b431db326723",
+        "mq-cf464570f287"
+      ],
+      "gold_titles": [
+        "California Gold Rush",
+        "History of Sacramento, California",
+        "Rio Linda High School",
+        "Valley girl"
+      ],
+      "split": "dev",
+      "qid": "com044"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop1__473563_309800_355213_203322",
+      "question": "Which county shares border with the county having the birth city of the director of Let the Good Times Roll?",
+      "answer": "Cabarrus County",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-0b2abc919edb",
+        "mq-2227b9b1689c",
+        "mq-288afd6addf2",
+        "mq-6bf79f43c8e7"
+      ],
+      "gold_titles": [
+        "Cleveland, North Carolina",
+        "Gold Hill, North Carolina",
+        "Let the Good Times Roll (film)",
+        "Robert Abel (animator)"
+      ],
+      "split": "test",
+      "qid": "com045"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop1__567737_141375_458768_33633",
+      "question": "When did the explorer reach the headquarters location of the group Study in Brown's record label is part of?",
+      "answer": "August 3, 1769",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-0e5bc70a819a",
+        "mq-7368bbf90848",
+        "mq-9bb7fc532718",
+        "mq-a9425b9e0c32"
+      ],
+      "gold_titles": [
+        "EmArcy Records",
+        "Santa Monica, California",
+        "Study in Brown",
+        "The Right Stuff Records"
+      ],
+      "split": "test",
+      "qid": "com046"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop1__696484_49925_13759_736921",
+      "question": "Where is the district that the person who wanted to reform and address Bernhard Lichtenberg's religion preached a sermon on Marian devotion before his death located?",
+      "answer": "Saxony-Anhalt",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-2bd864fb8801",
+        "mq-312f5a148d06",
+        "mq-35ed1d15cae5",
+        "mq-e559b8423176"
+      ],
+      "gold_titles": [
+        "Bernhard Lichtenberg",
+        "Mary, mother of Jesus",
+        "Reformation",
+        "Wittenberg (district)"
+      ],
+      "split": "dev",
+      "qid": "com047"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop1__9007_698949_157828_162309",
+      "question": "When did the country with a co-official language used in the film titled after the city that is the final resting place of Tito first attend the Olympics games?",
+      "answer": "2016",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-53f1e5497887",
+        "mq-9a4df36562dd",
+        "mq-c95301ef7483",
+        "mq-da5d0ec0dad8"
+      ],
+      "gold_titles": [
+        "Belgrade (film)",
+        "Josip Broz Tito",
+        "Serbian language",
+        "Yugoslavia at the Olympics"
+      ],
+      "split": "test",
+      "qid": "com048"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop3__519729_88460_30152_20999",
+      "question": "How were the people from whom the new coins were a proclamation of independence by the Somali Muslim Ajuran Empire expelled from the country between Thailand and Tham Non's country?",
+      "answer": "The dynasty regrouped and defeated the Portuguese",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-0d0f12535385",
+        "mq-1059c68ee4b4",
+        "mq-776fd1e9007f",
+        "mq-cf1f7f0ac3a8"
+      ],
+      "gold_titles": [
+        "Geography of Myanmar",
+        "Myanmar",
+        "Ottoman Empire",
+        "Tham Non"
+      ],
+      "split": "test",
+      "qid": "com049"
+    },
+    {
+      "group": "complex",
+      "source_id": "4hop3__794915_466199_695123_72134",
+      "question": "When did the town WIZE is licensed in become capitol of the state where Ward Township is located?",
+      "answer": "1839",
+      "aliases": [],
+      "hops": 4,
+      "gold_chunk_ids": [
+        "mq-d3e1fabf8c79",
+        "mq-e240ce9a380e",
+        "mq-f095b9050f07",
+        "mq-f69441aab42c"
+      ],
+      "gold_titles": [
+        "Randolph County, Illinois",
+        "Springfield, Illinois",
+        "WIZE",
+        "Ward Township, Randolph County, Indiana"
+      ],
+      "split": "dev",
+      "qid": "com050"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__123104_77615",
+      "question": "When did the military instruction start in the university that Paulo Manalo attended?",
+      "answer": "1912",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-1a5159d38d8e",
+        "mq-976f85928fdb"
+      ],
+      "gold_titles": [
+        "Paolo Manalo",
+        "Reserve Officers' Training Corps (Philippines)"
+      ],
+      "split": "test",
+      "qid": "mod017"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__131818_161450",
+      "question": "Where is the Voshmgir District located?",
+      "answer": "in the north-east of the country south of the Caspian Sea",
+      "aliases": [
+        "Caspian Sea"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-e355c20ac0c5",
+        "mq-e81f97925474"
+      ],
+      "gold_titles": [
+        "Golestan Province",
+        "Voshmgir District"
+      ],
+      "split": "test",
+      "qid": "mod018"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__153573_44085",
+      "question": "What was the show named after the character featured in the video game Mickey's Safari in Letterland?",
+      "answer": "The Mickey Mouse Club",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-18307980c0ea",
+        "mq-d85d2e3ecb3f"
+      ],
+      "gold_titles": [
+        "Mickey's Safari in Letterland",
+        "The Mickey Mouse Club"
+      ],
+      "split": "dev",
+      "qid": "mod019"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__2148_78851",
+      "question": "Which professional sports team does not play their home games at the same location where the Amateur Boxing Golden Gloves event is held?",
+      "answer": "Brooklyn Nets NBA",
+      "aliases": [
+        "Brooklyn"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-a7e1714077f1",
+        "mq-d6cc704c0f55"
+      ],
+      "gold_titles": [
+        "New York City",
+        "Sports in the New York metropolitan area"
+      ],
+      "split": "test",
+      "qid": "mod020"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__217011_80026",
+      "question": "Who played the character in Willy Wonka and the Chocolate Factory that the performer of Victrola was named after?",
+      "answer": "Julie Dawn Cole",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-a0e5d274029d",
+        "mq-b23ebb1b09a8"
+      ],
+      "gold_titles": [
+        "Julie Dawn Cole",
+        "Victrola (song)"
+      ],
+      "split": "test",
+      "qid": "mod021"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__24648_192417",
+      "question": "What is the league of the Carolina Panthers an example of?",
+      "answer": "sports league",
+      "aliases": [
+        "Sports league",
+        "league"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-a05ca3cd7a40",
+        "mq-dfa6c45c6c39"
+      ],
+      "gold_titles": [
+        "North Carolina",
+        "Sports league ranking"
+      ],
+      "split": "test",
+      "qid": "mod022"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__29893_29905",
+      "question": "How many mandatory transmitters of the owner and operator of most CBC TV stations were updated before the deadline?",
+      "answer": "only about half",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-452c2c387dc6",
+        "mq-55cfd9060792"
+      ],
+      "gold_titles": [
+        "CBC Television"
+      ],
+      "split": "test",
+      "qid": "mod023"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__301011_820181",
+      "question": "Which county is the birth place of Keith Sebelius located at?",
+      "answer": "Norton County",
+      "aliases": [
+        "Norton County, Kansas"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-12f0e966ebb8",
+        "mq-9086722f1ba6"
+      ],
+      "gold_titles": [
+        "Keith Sebelius",
+        "Norton, Kansas"
+      ],
+      "split": "test",
+      "qid": "mod024"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__345_59409",
+      "question": "Who was the person who purchased Tidal's parent company in 2015 talking about in the song 'Cry?'",
+      "answer": "three different relationships he had in the past",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-5264b109fc34",
+        "mq-5e9b36d62aa7"
+      ],
+      "gold_titles": [
+        "Beyoncé",
+        "Song Cry"
+      ],
+      "split": "test",
+      "qid": "mod025"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__358582_189042",
+      "question": "What is the record label of the Thrill of a Lifetime performer?",
+      "answer": "New Renaissance Records",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-cb2958595147",
+        "mq-f6cf7fe54e45"
+      ],
+      "gold_titles": [
+        "King Kobra III",
+        "Thrill of a Lifetime (album)"
+      ],
+      "split": "test",
+      "qid": "mod026"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__367318_7292",
+      "question": "What artist was featured on Smooth Jazz Stations, along with Kenny G and the performer of The Dance?",
+      "answer": "George Benson",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-40d5aa2f7d36",
+        "mq-ec41ddee683a"
+      ],
+      "gold_titles": [
+        "Adult contemporary music",
+        "The Dance (Dave Koz album)"
+      ],
+      "split": "dev",
+      "qid": "mod027"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__41158_35124",
+      "question": "How many books were said to have been written by the person who proposed explanations for the origins of earthquakes and the formation of mountains?",
+      "answer": "450",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-7146e6edc932",
+        "mq-ca973f9c86a7"
+      ],
+      "gold_titles": [
+        "Geology",
+        "Muslim world"
+      ],
+      "split": "dev",
+      "qid": "mod028"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__464479_70131",
+      "question": "Who constituted the freikorps in the country that the German Socialist Party was part of?",
+      "answer": "consisting largely of World War I veterans",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-9f8f3978e572",
+        "mq-a29af45851e1"
+      ],
+      "gold_titles": [
+        "Freikorps",
+        "German Socialist Party"
+      ],
+      "split": "dev",
+      "qid": "mod029"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__472486_97805",
+      "question": "Which war did the operator of the Fabian Wrede-class training ship serve in?",
+      "answer": "Winter War",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-1c253fe78bc6",
+        "mq-5e115a1e07cf"
+      ],
+      "gold_titles": [
+        "Fabian Wrede-class training ship",
+        "Finnish Navy"
+      ],
+      "split": "test",
+      "qid": "mod030"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__67660_81007",
+      "question": "Who does the narrator on How I Met Your Mother end up with?",
+      "answer": "Tracy McConnell",
+      "aliases": [
+        "The Mother (How I Met Your Mother)",
+        "The Mother"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-43d21f8f6b21",
+        "mq-db0ba6d9c9b1"
+      ],
+      "gold_titles": [
+        "How I Met Your Mother",
+        "The Mother (How I Met Your Mother)"
+      ],
+      "split": "test",
+      "qid": "mod031"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__814671_82341",
+      "question": "In what region of Florida is WMOP located?",
+      "answer": "in Northern Florida",
+      "aliases": [
+        "Northern Florida"
+      ],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-1b43472f399b",
+        "mq-e11e9c2a37f8"
+      ],
+      "gold_titles": [
+        "Ocala, Florida",
+        "WMOP"
+      ],
+      "split": "test",
+      "qid": "mod032"
+    },
+    {
+      "group": "moderate",
+      "source_id": "2hop__96414_47902",
+      "question": "Who is the actor who plays the title character of The Bourne Ultimatum?",
+      "answer": "Matt Damon",
+      "aliases": [],
+      "hops": 2,
+      "gold_chunk_ids": [
+        "mq-76ef51576695",
+        "mq-a15ca1a1281b"
+      ],
+      "gold_titles": [
+        "The Bourne Legacy (film)",
+        "The Bourne Ultimatum"
+      ],
+      "split": "dev",
+      "qid": "mod033"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__104095_40502",
+      "question": "Which country is Clara Peeters a citizen of?",
+      "answer": "Dutch Republic",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-d1b2ed26e6c0"
+      ],
+      "gold_titles": [
+        "Clara Peeters"
+      ],
+      "split": "test",
+      "qid": "sim000"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__124592_402641",
+      "question": "The father of Chiang Hsiao-chang was who?",
+      "answer": "Chiang Ching-kuo",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-aae726b42112"
+      ],
+      "gold_titles": [
+        "Chiang Hsiao-chang"
+      ],
+      "split": "test",
+      "qid": "sim001"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__268084_78303",
+      "question": "What was Chuck Norris name in walker texas ranger?",
+      "answer": "Cordell Walker",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-056fd428630f"
+      ],
+      "gold_titles": [
+        "Walker, Texas Ranger"
+      ],
+      "split": "test",
+      "qid": "sim002"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__275891_55984",
+      "question": "Who wrote the song the story sung by Brandi Carlile?",
+      "answer": "Phil Hanseroth",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-173b27a0cf50"
+      ],
+      "gold_titles": [
+        "The Story (song)"
+      ],
+      "split": "dev",
+      "qid": "sim003"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__359312_18803",
+      "question": "Shell announced it was in the process of doing what in April 2010?",
+      "answer": "trying to find a potential buyer for all of its operations in Finland",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-8eed5baae194"
+      ],
+      "gold_titles": [
+        "Royal Dutch Shell"
+      ],
+      "split": "dev",
+      "qid": "sim004"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__64175_90973",
+      "question": "Who did the original voice of Meg Griffin?",
+      "answer": "Lacey Chabert",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-9d5d27338677"
+      ],
+      "gold_titles": [
+        "Meg Griffin"
+      ],
+      "split": "test",
+      "qid": "sim005"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__6736_6733",
+      "question": "Where are the most speakers found?",
+      "answer": "Central Catalan",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-d195690f7f02"
+      ],
+      "gold_titles": [
+        "Catalan language"
+      ],
+      "split": "dev",
+      "qid": "sim006"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__706038_14251",
+      "question": "What George Robey line is believed to have started the archie nickname?",
+      "answer": "\"Archibald, certainly not!\"",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-9e3ec193f72f"
+      ],
+      "gold_titles": [
+        "Anti-aircraft warfare"
+      ],
+      "split": "test",
+      "qid": "sim007"
+    },
+    {
+      "group": "simple",
+      "source_id": "2hop__85993_512508",
+      "question": "Who discovered that the nuclei of atoms contained neutrons that carries no charge?",
+      "answer": "James Chadwick",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-b8b79224c8a7"
+      ],
+      "gold_titles": [
+        "Neutron"
+      ],
+      "split": "test",
+      "qid": "sim008"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop1__109113_720914_27537",
+      "question": "Who developed Venus with a Mirror?",
+      "answer": "Titian",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-96e631360524"
+      ],
+      "gold_titles": [
+        "Venus with a Mirror"
+      ],
+      "split": "test",
+      "qid": "sim009"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop1__161433_33952_34099",
+      "question": "How long are Tucson 's city council terms?",
+      "answer": "four-year",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-b2d8a46c15ab"
+      ],
+      "gold_titles": [
+        "Tucson, Arizona"
+      ],
+      "split": "test",
+      "qid": "sim010"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop1__506062_792411_51423",
+      "question": "What is the name of the castle in Toronto?",
+      "answer": "Casa Loma",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-b0ef13bb599d"
+      ],
+      "gold_titles": [
+        "Casa Loma"
+      ],
+      "split": "test",
+      "qid": "sim011"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop2__132957_379231_40768",
+      "question": "When did Honda , Toyota and Nissan open US assembly plants?",
+      "answer": "1981",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-91fdad99287e"
+      ],
+      "gold_titles": [
+        "1973 oil crisis"
+      ],
+      "split": "test",
+      "qid": "sim012"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop2__304722_238553_63959",
+      "question": "When was the last time Birmingham City beat Aston Villa?",
+      "answer": "1 December 2010",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-aec3d863ed9b"
+      ],
+      "gold_titles": [
+        "Second City derby"
+      ],
+      "split": "dev",
+      "qid": "sim013"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop2__655849_467331_162182",
+      "question": "In what region of Vietnam is Da Nang located?",
+      "answer": "South Central Coast",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-e8997e19492a"
+      ],
+      "gold_titles": [
+        "South Central Coast"
+      ],
+      "split": "dev",
+      "qid": "sim014"
+    },
+    {
+      "group": "simple",
+      "source_id": "3hop2__782397_467331_162182",
+      "question": "In what region of Vietnam is Da Nang located?",
+      "answer": "South Central Coast",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-e8997e19492a"
+      ],
+      "gold_titles": [
+        "South Central Coast"
+      ],
+      "split": "test",
+      "qid": "sim015"
+    },
+    {
+      "group": "simple",
+      "source_id": "4hop2__9988_158985_70784_61381",
+      "question": "Where is the most growth taking place in desalination for agricultural use?",
+      "answer": "Persian Gulf",
+      "aliases": [],
+      "hops": 1,
+      "gold_chunk_ids": [
+        "mq-72a18c5c6bd8"
+      ],
+      "gold_titles": [
+        "Water resources"
+      ],
+      "split": "test",
+      "qid": "sim016"
+    }
+  ]
+}

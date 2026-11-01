@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: rag
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag -d rag"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    env_file: .env            # copy .env.example to .env and set OPENAI_API_KEY
+    environment:
+      DATABASE_URL: postgresql+asyncpg://rag:rag@postgres:5432/rag
+      DATA_DIR: /app/data
+      EXPERIMENTS_DIR: /experiments
+      CORS_ORIGINS: '["http://localhost:5173","http://localhost:8000"]'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/data:/app/data        # Chroma index, uploads
+      - hfcache:/hf-cache               # NLI model weights persist across rebuilds
+      - ./experiments:/experiments      # benchmark results written/read here
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  pgdata:
+  hfcache:

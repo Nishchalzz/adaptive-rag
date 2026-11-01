@@ -1,0 +1,30 @@
+# Runtime dependencies (top-level pins). Exact transitive versions: requirements.lock.txt
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.2
+pydantic-settings==2.16.2
+python-multipart==0.0.33
+PyYAML==6.0.3
+langchain-core==1.7.3
+langchain-openai==1.7.3
+langchain-text-splitters==1.1.3
+openai==3.42.0
+tiktoken==0.14.0
+chromadb==1.5.9
+pypdf==6.21.4
+docx2txt==0.9
+SQLAlchemy[asyncio]==2.1.6
+aiosqlite==0.22.1
+asyncpg==0.32.0
+# Proposed pipeline (LangGraph) and evidence verification (NLI). torch: CPU wheels come from
+# https://download.pytorch.org/whl/cpu (see backend/Dockerfile); on a plain `pip install` it pulls the default build.
+langgraph==1.2.19
+torch==2.15.0
+transformers==5.22.1
+sentencepiece==0.2.2
+protobuf==7.36.2
+huggingface_hub==2.4.0
+numpy==2.4.6
+# Evaluation and plots
+scipy==1.17.1
+matplotlib==3.11.2
