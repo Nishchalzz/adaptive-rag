@@ -63,9 +63,42 @@ def _normalised(vectors: Sequence[Sequence[float]]) -> np.ndarray:
 
 
 class EvidenceMatcher:
+    # Window embeddings are a pure function of the text, so they are kept across queries (bounded).
+    SHARED_CACHE_LIMIT = 20_000
+
     def __init__(self, embeddings: Embeddings, embedding_model: str) -> None:
         self._embeddings = embeddings
         self._embedding_model = embedding_model
+        self._shared: dict[str, list[float]] = {}
+
+    async def _embed_missing(
+        self, texts: Sequence[str], cache: dict[str, list[float]], usage: UsageTracker
+    ) -> None:
+        missing = []
+        for text in dict.fromkeys(texts):
+            if text in cache:
+                continue
+            if text in self._shared:
+                cache[text] = self._shared[text]  # no API call, so no usage is recorded
+            else:
+                missing.append(text)
+        if not missing:
+            return
+        vectors = await self._embeddings.aembed_documents(missing)
+        if len(self._shared) + len(missing) > self.SHARED_CACHE_LIMIT:
+            self._shared.clear()
+        for text, vector in zip(missing, vectors, strict=True):
+            cache[text] = vector
+            self._shared[text] = vector
+        usage.record_embedding("verification_embedding", self._embedding_model, missing)
+
+    async def prefetch(
+        self, chunks: Sequence[RetrievedChunk], *, window_sentences: int, cache: dict[str, list[float]], usage: UsageTracker
+    ) -> None:
+        """Embed the chunks' evidence windows ahead of time, e.g. while claims are still being extracted."""
+        await self._embed_missing(
+            [w for chunk in chunks for w in sentence_windows(chunk.text, window_sentences)], cache, usage
+        )
 
     async def build_index(
         self,
@@ -76,15 +109,10 @@ class EvidenceMatcher:
         cache: dict[str, list[float]],
         usage: UsageTracker,
     ) -> EvidenceIndex:
-        """Embed every window of every chunk plus the claims in one request; ``cache`` avoids
-        re-embedding windows across verification attempts of the same query."""
+        """Embed every not-yet-embedded window and claim in one request; ``cache`` (per query) and the
+        matcher's shared cache avoid re-embedding the same text."""
         windows = [(chunk, window) for chunk in chunks for window in sentence_windows(chunk.text, window_sentences)]
-        texts = [w for _, w in windows] + list(claims)
-        missing = list(dict.fromkeys(t for t in texts if t not in cache))
-        if missing:
-            vectors = await self._embeddings.aembed_documents(missing)
-            cache.update(zip(missing, vectors, strict=True))
-            usage.record_embedding("verification_embedding", self._embedding_model, missing)
+        await self._embed_missing([w for _, w in windows] + list(claims), cache, usage)
         return EvidenceIndex(
             windows,
             _normalised([cache[w] for _, w in windows]),

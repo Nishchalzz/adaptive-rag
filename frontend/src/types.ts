@@ -177,6 +177,10 @@ export interface QueryResponse {
   total_latency_ms: number;
   models: Record<string, string>;
   config: Record<string, unknown>;
+  /** True when this is a replay of a saved real run; latency, tokens and cost are those of the original run. */
+  cached?: boolean;
+  cached_from?: string | null;
+  served_ms?: number | null;
 }
 
 export interface QueryLog {

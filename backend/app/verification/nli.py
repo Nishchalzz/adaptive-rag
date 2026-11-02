@@ -34,7 +34,7 @@ class EntailmentModel(Protocol):
 
 
 class HFEntailmentModel:
-    def __init__(self, name: str, device: str = "cpu", batch_size: int = 16, max_length: int = 512) -> None:
+    def __init__(self, name: str, device: str = "cpu", batch_size: int = 8, max_length: int = 512) -> None:
         self.name = name
         self._device = device
         self._batch_size = batch_size
@@ -45,6 +45,7 @@ class HFEntailmentModel:
         self.error: str | None = None
 
     def load(self) -> None:
+        first_load = False
         with self._lock:
             if self._loaded:
                 return
@@ -64,33 +65,44 @@ class HFEntailmentModel:
             self._loaded = True
             self.status = "ready"
             logger.info("Loaded NLI model %s on %s", self.name, self._device)
+            first_load = True
+        if first_load:  # outside the lock: score() takes it
+            self._warm_up()
+
+    def _warm_up(self) -> None:
+        """Run one tiny inference so lazy initialisation cost is paid at startup, not by the first query."""
+        try:
+            self.score([("The tower is in Paris.", "The tower is located in Paris.")])
+        except Exception:  # noqa: BLE001 - warm-up is an optimisation only
+            logger.warning("NLI warm-up failed", exc_info=True)
 
     def score(self, pairs: Sequence[tuple[str, str]]) -> list[NLIResult]:
         if not pairs:
             return []
         self.load()
-        results: list[NLIResult] = []
+        # Padding makes every pair in a batch as expensive as the longest one, so pairs are processed in
+        # order of length (short windows are not padded up to whole passages) and put back afterwards.
+        order = sorted(range(len(pairs)), key=lambda i: len(pairs[i][0]) + len(pairs[i][1]))
+        results: list[NLIResult | None] = [None] * len(pairs)
         with self._lock, self._torch.inference_mode():  # one inference at a time; torch parallelises internally
-            for start in range(0, len(pairs), self._batch_size):
-                batch = pairs[start : start + self._batch_size]
+            for start in range(0, len(order), self._batch_size):
+                indices = order[start : start + self._batch_size]
                 encoded = self._tokenizer(
-                    [p for p, _ in batch],
-                    [h for _, h in batch],
+                    [pairs[i][0] for i in indices],
+                    [pairs[i][1] for i in indices],
                     truncation="only_first",
                     max_length=self._max_length,
                     padding=True,
                     return_tensors="pt",
                 ).to(self._device)
                 probs = self._model(**encoded).logits.softmax(dim=-1).tolist()
-                results.extend(
-                    NLIResult(
+                for i, row in zip(indices, probs, strict=True):
+                    results[i] = NLIResult(
                         entailment=row[self._index["entailment"]],
                         neutral=row[self._index["neutral"]],
                         contradiction=row[self._index["contradiction"]],
                     )
-                    for row in probs
-                )
-        return results
+        return results  # type: ignore[return-value]
 
 
 class NLIRegistry:

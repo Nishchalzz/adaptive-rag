@@ -22,6 +22,8 @@ export interface QueryBody {
   pipeline: PipelineName;
   corpus?: string;
   overrides?: Record<string, unknown>;
+  /** false forces a live run instead of replaying a saved real run of a demo question. */
+  use_cache?: boolean;
 }
 
 const json = (body: unknown): RequestInit => ({
@@ -33,7 +35,7 @@ const json = (body: unknown): RequestInit => ({
 export const api = {
   health: () => request<{ status: string; llm_configured: boolean; nli_models: Record<string, string> }>('/api/health'),
   demoQuestions: () =>
-    request<{ questions: { category: string; question: string }[] }>('/api/demo/questions'),
+    request<{ questions: { category: string; question: string }[]; selection_note?: string }>('/api/demo/questions'),
   query: (body: QueryBody) => request<QueryResponse>('/api/query', json(body)),
   queries: (limit = 50) => request<QueryLog[]>(`/api/queries?limit=${limit}`),
   queryById: (id: string) => request<QueryResponse>(`/api/queries/${encodeURIComponent(id)}`),

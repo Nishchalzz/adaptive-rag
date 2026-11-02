@@ -1,17 +1,18 @@
 import type { ReactNode } from 'react';
 import type { Status } from '../types';
 
+// Status colours keep AA contrast on their tinted backgrounds (800-level text on 50/100 fills).
 export const statusStyles: Record<string, string> = {
-  supported: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
-  partial: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-  unsupported: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300',
+  supported: 'bg-emerald-50 text-emerald-800 ring-1 ring-inset ring-emerald-200',
+  partial: 'bg-amber-50 text-amber-900 ring-1 ring-inset ring-amber-200',
+  unsupported: 'bg-red-50 text-red-800 ring-1 ring-inset ring-red-200',
 };
 
 export const toneStyles: Record<string, string> = {
   ...statusStyles,
-  neutral: 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-  info: 'bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300',
-  violet: 'bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-300',
+  neutral: 'bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200',
+  info: 'bg-indigo-50 text-indigo-800 ring-1 ring-inset ring-indigo-200',
+  violet: 'bg-violet-50 text-violet-800 ring-1 ring-inset ring-violet-200',
 };
 
 export function statusTone(s: Status | string | null | undefined): string {
@@ -23,6 +24,18 @@ export function Badge({ children, tone = 'neutral' }: { children: ReactNode; ton
     <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${toneStyles[tone] ?? toneStyles.neutral}`}>
       {children}
     </span>
+  );
+}
+
+export function PageHeader({ title, subtitle, right }: { title: string; subtitle?: ReactNode; right?: ReactNode }) {
+  return (
+    <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">{title}</h1>
+        {subtitle && <p className="mt-1 max-w-3xl text-sm leading-relaxed text-slate-600">{subtitle}</p>}
+      </div>
+      {right}
+    </div>
   );
 }
 
@@ -38,10 +51,10 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={`rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className}`}>
+    <section className={`rounded-xl border border-slate-200 bg-white p-5 ${className}`}>
       {(title || right) && (
-        <div className="mb-3 flex items-center justify-between gap-2">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{title}</h2>
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold text-slate-800">{title}</h2>
           {right}
         </div>
       )}
@@ -52,10 +65,10 @@ export function Card({
 
 export function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: ReactNode }) {
   return (
-    <div className="rounded-lg bg-slate-100 p-3 dark:bg-slate-800/60">
-      <div className="text-xs text-slate-500 dark:text-slate-400">{label}</div>
-      <div className="text-lg font-semibold">{value}</div>
-      {hint && <div className="text-xs text-slate-500 dark:text-slate-400">{hint}</div>}
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+      <div className="text-xs text-slate-500">{label}</div>
+      <div className="mt-0.5 text-lg font-semibold text-slate-900">{value}</div>
+      {hint && <div className="mt-0.5 text-xs text-slate-500">{hint}</div>}
     </div>
   );
 }
@@ -63,7 +76,7 @@ export function Stat({ label, value, hint }: { label: string; value: ReactNode; 
 export function Bar({
   value,
   max = 1,
-  color = 'bg-sky-500',
+  color = 'bg-indigo-500',
   label,
 }: {
   value: number;
@@ -74,28 +87,64 @@ export function Bar({
   const width = max > 0 ? Math.min(Math.max(value / max, 0), 1) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
-      {label && <span className="w-28 shrink-0 text-xs text-slate-500 dark:text-slate-400">{label}</span>}
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+      {label && <span className="w-28 shrink-0 text-xs text-slate-500">{label}</span>}
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
         <div className={`h-full rounded-full ${color}`} style={{ width: `${width}%` }} />
       </div>
-      <span className="w-14 shrink-0 text-right text-xs tabular-nums">{value.toFixed(3)}</span>
+      <span className="w-14 shrink-0 text-right text-xs tabular-nums text-slate-700">{value.toFixed(3)}</span>
     </div>
   );
 }
 
 export function ErrorBox({ message }: { message: string }) {
+  return <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">{message}</div>;
+}
+
+export function Empty({ children }: { children: ReactNode }) {
+  return <p className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">{children}</p>;
+}
+
+export function Skeleton({ className = 'h-4 w-full' }: { className?: string }) {
+  return <div className={`skeleton ${className}`} aria-hidden />;
+}
+
+export function SkeletonCard({ lines = 3 }: { lines?: number }) {
   return (
-    <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300">
-      {message}
+    <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-5" role="status" aria-label="Loading">
+      <Skeleton className="h-4 w-1/4" />
+      {Array.from({ length: lines }).map((_, i) => (
+        <Skeleton key={i} className={`h-3 ${i === lines - 1 ? 'w-2/3' : 'w-full'}`} />
+      ))}
     </div>
   );
 }
 
-export function Empty({ children }: { children: ReactNode }) {
-  return <p className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 dark:border-slate-700">{children}</p>;
+/** A small "i" that reveals an explanation on hover or keyboard focus. */
+export function InfoTip({ children }: { children: ReactNode }) {
+  return (
+    <span className="group relative inline-block align-middle">
+      <button
+        type="button"
+        aria-label="What does this mean?"
+        className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-slate-300 bg-white text-[10px] font-semibold leading-none text-slate-500 hover:border-indigo-400 hover:text-indigo-600"
+      >
+        i
+      </button>
+      <span
+        role="tooltip"
+        className="pointer-events-none invisible absolute left-1/2 top-full z-20 mt-1 w-64 -translate-x-1/2 rounded-lg border border-slate-200 bg-white p-3 text-left text-xs font-normal normal-case leading-relaxed text-slate-700 shadow-lg group-focus-within:visible group-hover:visible"
+      >
+        {children}
+      </span>
+    </span>
+  );
 }
 
+export const btnPrimary =
+  'rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50';
+export const inputBase =
+  'w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500';
+
 export const ms = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1)} s` : `${Math.round(v)} ms`);
-export const usd = (v: number | null | undefined) => (v == null ? 'n/a' : `$${v.toFixed(5)}`);
 export const num = (v: number, digits = 3) => v.toFixed(digits);
 export const sourceLabel = (filename: string, page: number | null) => (page == null ? filename : `${filename}, p. ${page}`);

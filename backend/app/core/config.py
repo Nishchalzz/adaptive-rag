@@ -62,6 +62,8 @@ class Settings(BaseSettings):
     preload_nli: bool = True
     seed_demo_corpus: bool = True
     experiments_dir: Path = PROJECT_ROOT / "experiments"
+    demo_cache_enabled: bool = True
+    demo_cache_dir: Path | None = None  # defaults to backend/seed/demo_cache
 
     @model_validator(mode="after")
     def _derive_paths(self) -> Settings:
@@ -73,6 +75,8 @@ class Settings(BaseSettings):
             self.chroma_dir = self.data_dir / "chroma"
         if self.upload_dir is None:
             self.upload_dir = self.data_dir / "uploads"
+        if self.demo_cache_dir is None:
+            self.demo_cache_dir = BACKEND_DIR / "seed" / "demo_cache"
         return self
 
     @property

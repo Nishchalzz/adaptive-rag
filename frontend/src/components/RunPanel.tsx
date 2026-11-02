@@ -1,8 +1,10 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { RunState } from '../useRun';
-import type { PipelineName } from '../types';
+import type { PipelineName, QueryResponse } from '../types';
 import { AnswerView } from './AnswerView';
-import { Badge, Card, ErrorBox, ms, usd } from './ui';
+import { ReplayNotice } from './Replay';
+import { Badge, Card, ErrorBox, SkeletonCard, ms } from './ui';
 
 const NODE_LABELS: Record<string, string> = {
   analyze_query: 'Analyse query complexity',
@@ -24,19 +26,50 @@ function summarise(summary: Record<string, unknown>): string {
     .join('  ');
 }
 
-export function RunPanel({ title, pipeline, state }: { title: string; pipeline: PipelineName; state: RunState }) {
+export type Tone = 'plain' | 'gray' | 'indigo';
+const TITLE_STYLE: Record<Tone, string> = {
+  plain: '',
+  gray: 'rounded-md bg-slate-600 px-2 py-0.5 text-white',
+  indigo: 'rounded-md bg-indigo-600 px-2 py-0.5 text-white',
+};
+const CARD_STYLE: Record<Tone, string> = { plain: '', gray: '!border-slate-300', indigo: '!border-indigo-300' };
+
+export function RunPanel({
+  title,
+  pipeline,
+  state,
+  tone = 'plain',
+  answerResponse,
+  note,
+  supportLabel = 'support',
+  onRunLive,
+}: {
+  title: string;
+  pipeline: PipelineName;
+  state: RunState;
+  tone?: Tone;
+  /** Response used for the answer text and its colouring (the audited baseline in compare mode). */
+  answerResponse?: QueryResponse;
+  /** Short explanation shown above the answer. */
+  note?: ReactNode;
+  supportLabel?: string;
+  /** Re-run live instead of replaying a saved real run. */
+  onRunLive?: () => void;
+}) {
   const { response, steps, error, running } = state;
+  const shown = answerResponse ?? response;
   return (
     <Card
-      title={title}
+      className={CARD_STYLE[tone]}
+      title={<span className={TITLE_STYLE[tone]}>{title}</span>}
       right={
         response && (
           <span className="flex gap-3 text-xs">
-            <Link className="text-sky-700 hover:underline dark:text-sky-300" to={`/insights/${response.query_id}`}>
+            <Link className="text-indigo-700 hover:underline" to={`/insights/${response.query_id}`}>
               retrieval insights
             </Link>
             {response.verification && (
-              <Link className="text-sky-700 hover:underline dark:text-sky-300" to={`/verification/${response.query_id}`}>
+              <Link className="text-indigo-700 hover:underline" to={`/verification/${response.query_id}`}>
                 verification
               </Link>
             )}
@@ -45,20 +78,21 @@ export function RunPanel({ title, pipeline, state }: { title: string; pipeline: 
       }
     >
       {pipeline === 'proposed' && steps.length > 0 && (
-        <ol className="mb-3 space-y-1 border-l-2 border-slate-200 pl-3 text-xs dark:border-slate-700">
+        <ol className="mb-4 space-y-1.5 border-l-2 border-indigo-200 pl-3 text-xs">
           {steps.map((s, i) => (
             <li key={i}>
               <span className="font-medium">{NODE_LABELS[s.node] ?? s.node}</span>{' '}
               <span className="text-slate-500">{summarise(s.summary)}</span>
             </li>
           ))}
-          {running && <li className="animate-pulse text-slate-500">working…</li>}
+          {running && <li className="animate-pulse text-indigo-600">working…</li>}
         </ol>
       )}
-      {running && !response && pipeline === 'baseline' && <p className="animate-pulse text-sm text-slate-500">working…</p>}
+      {running && !response && (pipeline === 'baseline' || steps.length === 0) && <SkeletonCard lines={3} />}
       {error && <ErrorBox message={error} />}
-      {response && (
+      {response && shown && (
         <>
+          <ReplayNotice response={response} onRunLive={onRunLive} disabled={running} />
           <div className="mb-3 flex flex-wrap gap-2 text-xs">
             {response.complexity && (
               <Badge tone="violet">
@@ -74,16 +108,17 @@ export function RunPanel({ title, pipeline, state }: { title: string; pipeline: 
             </Badge>
             <Badge>{ms(response.total_latency_ms)}</Badge>
             <Badge>
-              {response.usage.input_tokens + response.usage.output_tokens} tokens · {usd(response.usage.cost_usd)}
+              {response.usage.input_tokens + response.usage.output_tokens} tokens
             </Badge>
-            {response.verification && (
-              <Badge tone={response.verification.passed ? 'supported' : 'partial'}>
-                support {response.verification.support_score.toFixed(2)}
+            {shown.verification && (
+              <Badge tone={shown.verification.passed ? 'supported' : 'partial'}>
+                {supportLabel} {shown.verification.support_score.toFixed(2)}
               </Badge>
             )}
             {response.attempts.length > 1 && <Badge tone="partial">{response.attempts.length} attempts</Badge>}
           </div>
-          <AnswerView response={response} />
+          {note && <div className="mb-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600">{note}</div>}
+          <AnswerView response={shown} />
         </>
       )}
     </Card>

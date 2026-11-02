@@ -1,0 +1,528 @@
+{
+  "version": 1,
+  "key": "33660e87c80066a03f8e3f7ec57c4a6ddb0b84b5881fa726bf44725c44ff0c60",
+  "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?",
+  "pipeline": "proposed",
+  "corpus": "default",
+  "overrides": {
+    "proposed": {
+      "adaptive": false,
+      "verify": true
+    },
+    "verification": {
+      "max_retries": 0
+    }
+  },
+  "corpus_fingerprint": [
+    "5699ba7ebf9a36384e289223faf2f1963aa57783961b038e93408649a907b7e7",
+    "67fd62ffc60aa43a8e1a9e3431341e8ac0c21de89a4b3959622ad08eab5ddf0c",
+    "6a5ecf9e3460c5455e64a3941c358b58908bebf85949f89cc9087d83f7567813"
+  ],
+  "recorded_at": "2026-11-02T04:37:09.691172Z",
+  "response": {
+    "query_id": "ac39c4c99d534c9f915c2d74697c8602",
+    "created_at": "2026-11-02T04:37:09.691172Z",
+    "pipeline": "proposed",
+    "variant": {
+      "adaptive": false,
+      "decompose": false,
+      "verify": true
+    },
+    "corpus": "default",
+    "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?",
+    "answer": "The dean of the school appoints the third examiner when the grades differ by more than one grade, as stated in passage [1]. Since Project Atlas is conducted in the Retrieval and Reasoning Lab, the co-supervisor must come from that laboratory, according to passage [2].",
+    "citations": [
+      {
+        "number": 1,
+        "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00002",
+        "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+        "filename": "graduate_regulations.pdf",
+        "page": 3
+      },
+      {
+        "number": 2,
+        "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00001",
+        "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+        "filename": "graduate_regulations.pdf",
+        "page": 2
+      }
+    ],
+    "sentences": [
+      {
+        "index": 0,
+        "text": "The dean of the school appoints the third examiner when the grades differ by more than one grade, as stated in passage [1].",
+        "citation_numbers": [
+          1
+        ],
+        "status": "supported"
+      },
+      {
+        "index": 1,
+        "text": "Since Project Atlas is conducted in the Retrieval and Reasoning Lab, the co-supervisor must come from that laboratory, according to passage [2].",
+        "citation_numbers": [
+          2
+        ],
+        "status": "partial"
+      }
+    ],
+    "invalid_citations": [],
+    "retrieval": {
+      "strategy": "fixed_top_k",
+      "k_requested": 5,
+      "k_final": 5,
+      "num_retrieved": 5,
+      "latency_ms": 754.5682000054512,
+      "embedding_latency_ms": 728.0445000214968,
+      "search_latency_ms": 26.52369998395443,
+      "queries": [
+        "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?"
+      ],
+      "confidence": null,
+      "expansions": 0,
+      "chunks": [
+        {
+          "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00002",
+          "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+          "filename": "graduate_regulations.pdf",
+          "page": 3,
+          "chunk_index": 2,
+          "text": "Section 3. Assessment 3.1 Each thesis is graded by two examiners on a scale from 1 (lowest) to 5 (highest). 3.2 If the two grades differ by more than one grade, the dean of the school appoints a third examiner. 3.3 The minimum passing grade is 2. 3.4 The thesis must be submitted no later than 31 May for graduation in June. 3.5 A failed thesis may be resubmitted once, within six months of the decision.",
+          "score": 0.5889824628829956,
+          "rank": 1,
+          "citation_number": 1,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00001",
+          "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+          "filename": "graduate_regulations.pdf",
+          "page": 2,
+          "chunk_index": 1,
+          "text": "Section 2. Thesis supervision 2.1 Every master's thesis has a main supervisor who holds a doctorate and is employed by the institute. 2.2 A thesis carried out in a research laboratory must also have a co-supervisor from that laboratory. 2.3 A student may change supervisor once, with the approval of the dean of the school. 2.4 Students meet their main supervisor at least every two weeks.",
+          "score": 0.5544901490211487,
+          "rank": 2,
+          "citation_number": 2,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00000",
+          "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+          "filename": "graduate_regulations.pdf",
+          "page": 1,
+          "chunk_index": 0,
+          "text": "HIT Graduate Study Regulations (2025 edition) Synthetic demonstration document. The institute and its rules are fictional. Section 1. Admission and credits 1.1 A master's programme at the Halvorsen Institute of Technology comprises 120 ECTS credits and normally takes two years of full-time study. 1.2 The master's thesis is worth 30 ECTS credits. 1.3 Applicants must hold a bachelor's degree with at least 180 ECTS credits. 1.4 Applications for the autumn intake must be submitted by 15 March.",
+          "score": 0.3860272765159607,
+          "rank": 3,
+          "citation_number": 3,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00000",
+          "doc_id": "ba0c82303fd649ba832a79ed2fa8c6bb",
+          "filename": "research_labs.md",
+          "page": null,
+          "chunk_index": 0,
+          "text": "Research Laboratories at the Halvorsen Institute of Technology\n\n> Synthetic demonstration document. The laboratories, people and figures described here are fictional.\nRetrieval and Reasoning Lab\n\nThe Retrieval and Reasoning Lab (RRL) belongs to the School of Computing and is located on the third\nfloor of Aster Hall. It was founded in 2016 and is led by Dr. Lena Park. The lab has 14 members: three\nfaculty members, eight doctoral students and three research engineers. In 2024 its research funding was\n2.4 million euros, about 70 percent of which came from the Nordic Research Council.\n\nThe lab runs two main projects. Project Veritas, started in 2022, develops methods that check whether\nstatements generated by language models are supported by source documents. Project Atlas, started in\n2023, studies multi-hop retrieval for questions that need information from several documents.\nGrid Storage Lab",
+          "score": 0.37233954668045044,
+          "rank": 4,
+          "citation_number": 4,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00002",
+          "doc_id": "ba0c82303fd649ba832a79ed2fa8c6bb",
+          "filename": "research_labs.md",
+          "page": null,
+          "chunk_index": 2,
+          "text": "The institute's high-performance computing cluster, called Nordlys, is located in the basement of Aster\nHall and has 96 GPU nodes. All three laboratories book time on Nordlys through the research office.",
+          "score": 0.3197401165962219,
+          "rank": 5,
+          "citation_number": 5,
+          "retrieved_by": "original_query"
+        }
+      ]
+    },
+    "complexity": null,
+    "verification": {
+      "claims": [
+        {
+          "claim_id": "a0c0",
+          "text": "The dean of the school appoints the third examiner when the grades differ by more than one grade.",
+          "sentence_index": 0,
+          "citations": [
+            1
+          ],
+          "status": "supported",
+          "citation_status": "correct",
+          "failure": null,
+          "method": "nli",
+          "evidence": {
+            "citation_number": 1,
+            "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00002",
+            "filename": "graduate_regulations.pdf",
+            "page": 3,
+            "text": "3.2 If the two grades differ by more than one grade, the dean of the school appoints a third examiner. 3.3 The minimum passing grade is 2. 3.4 The thesis must be submitted no later than 31 May for graduation in June.",
+            "similarity": 0.7567,
+            "entailment": 0.9946,
+            "neutral": 0.0041,
+            "contradiction": 0.0015
+          },
+          "suggested_citation": null,
+          "judge_rationale": null,
+          "judge_quote": null,
+          "judge_quote_verified": null
+        },
+        {
+          "claim_id": "a0c1",
+          "text": "Project Atlas is conducted in the Retrieval and Reasoning Lab.",
+          "sentence_index": 1,
+          "citations": [
+            2
+          ],
+          "status": "supported",
+          "citation_status": "misattributed",
+          "failure": null,
+          "method": "nli",
+          "evidence": {
+            "citation_number": 4,
+            "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00000",
+            "filename": "research_labs.md",
+            "page": null,
+            "text": "Project Atlas, started in 2023, studies multi-hop retrieval for questions that need information from several documents. Grid Storage Lab Retrieval and Reasoning Lab The Retrieval and Reasoning Lab (RRL) belongs to the School of Computing and is located on the third floor of Aster Hall.",
+            "similarity": 0.6849,
+            "entailment": 0.9707,
+            "neutral": 0.0219,
+            "contradiction": 0.0075
+          },
+          "suggested_citation": 4,
+          "judge_rationale": null,
+          "judge_quote": null,
+          "judge_quote_verified": null
+        },
+        {
+          "claim_id": "a0c2",
+          "text": "The co-supervisor must come from the Retrieval and Reasoning Lab.",
+          "sentence_index": 1,
+          "citations": [
+            2
+          ],
+          "status": "unsupported",
+          "citation_status": "incorrect",
+          "failure": "no_evidence",
+          "method": "llm_judge",
+          "evidence": null,
+          "suggested_citation": null,
+          "judge_rationale": "The passages do not specify that a co-supervisor must come from the Retrieval and Reasoning Lab; they only state that a co-supervisor must be from the research laboratory where the thesis is carried out.",
+          "judge_quote": null,
+          "judge_quote_verified": null
+        }
+      ],
+      "support_score": 0.6667,
+      "citation_accuracy": 0.3333,
+      "num_supported": 2,
+      "num_partial": 0,
+      "num_unsupported": 1,
+      "passed": false,
+      "abstained": false,
+      "extraction_fallback": false,
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "latency_ms": 35273.11070001451,
+      "timings_ms": {
+        "embedding": 20.4,
+        "nli": 33609.4,
+        "nli_pairs": 23.0,
+        "judge": 1642.7
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "answer": "The dean of the school appoints the third examiner when the grades differ by more than one grade, as stated in passage [1]. Since Project Atlas is conducted in the Retrieval and Reasoning Lab, the co-supervisor must come from that laboratory, according to passage [2].",
+        "sentences": [
+          {
+            "index": 0,
+            "text": "The dean of the school appoints the third examiner when the grades differ by more than one grade, as stated in passage [1].",
+            "citation_numbers": [
+              1
+            ],
+            "status": "supported"
+          },
+          {
+            "index": 1,
+            "text": "Since Project Atlas is conducted in the Retrieval and Reasoning Lab, the co-supervisor must come from that laboratory, according to passage [2].",
+            "citation_numbers": [
+              2
+            ],
+            "status": "partial"
+          }
+        ],
+        "invalid_citations": [],
+        "num_context_chunks": 5,
+        "verification": {
+          "claims": [
+            {
+              "claim_id": "a0c0",
+              "text": "The dean of the school appoints the third examiner when the grades differ by more than one grade.",
+              "sentence_index": 0,
+              "citations": [
+                1
+              ],
+              "status": "supported",
+              "citation_status": "correct",
+              "failure": null,
+              "method": "nli",
+              "evidence": {
+                "citation_number": 1,
+                "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00002",
+                "filename": "graduate_regulations.pdf",
+                "page": 3,
+                "text": "3.2 If the two grades differ by more than one grade, the dean of the school appoints a third examiner. 3.3 The minimum passing grade is 2. 3.4 The thesis must be submitted no later than 31 May for graduation in June.",
+                "similarity": 0.7567,
+                "entailment": 0.9946,
+                "neutral": 0.0041,
+                "contradiction": 0.0015
+              },
+              "suggested_citation": null,
+              "judge_rationale": null,
+              "judge_quote": null,
+              "judge_quote_verified": null
+            },
+            {
+              "claim_id": "a0c1",
+              "text": "Project Atlas is conducted in the Retrieval and Reasoning Lab.",
+              "sentence_index": 1,
+              "citations": [
+                2
+              ],
+              "status": "supported",
+              "citation_status": "misattributed",
+              "failure": null,
+              "method": "nli",
+              "evidence": {
+                "citation_number": 4,
+                "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00000",
+                "filename": "research_labs.md",
+                "page": null,
+                "text": "Project Atlas, started in 2023, studies multi-hop retrieval for questions that need information from several documents. Grid Storage Lab Retrieval and Reasoning Lab The Retrieval and Reasoning Lab (RRL) belongs to the School of Computing and is located on the third floor of Aster Hall.",
+                "similarity": 0.6849,
+                "entailment": 0.9707,
+                "neutral": 0.0219,
+                "contradiction": 0.0075
+              },
+              "suggested_citation": 4,
+              "judge_rationale": null,
+              "judge_quote": null,
+              "judge_quote_verified": null
+            },
+            {
+              "claim_id": "a0c2",
+              "text": "The co-supervisor must come from the Retrieval and Reasoning Lab.",
+              "sentence_index": 1,
+              "citations": [
+                2
+              ],
+              "status": "unsupported",
+              "citation_status": "incorrect",
+              "failure": "no_evidence",
+              "method": "llm_judge",
+              "evidence": null,
+              "suggested_citation": null,
+              "judge_rationale": "The passages do not specify that a co-supervisor must come from the Retrieval and Reasoning Lab; they only state that a co-supervisor must be from the research laboratory where the thesis is carried out.",
+              "judge_quote": null,
+              "judge_quote_verified": null
+            }
+          ],
+          "support_score": 0.6667,
+          "citation_accuracy": 0.3333,
+          "num_supported": 2,
+          "num_partial": 0,
+          "num_unsupported": 1,
+          "passed": false,
+          "abstained": false,
+          "extraction_fallback": false,
+          "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+          "latency_ms": 35273.11070001451,
+          "timings_ms": {
+            "embedding": 20.4,
+            "nli": 33609.4,
+            "nli_pairs": 23.0,
+            "judge": 1642.7
+          }
+        },
+        "latency_ms": 38263.492199999746,
+        "cumulative_latency_ms": 39024.647400015965,
+        "cumulative_input_tokens": 1638,
+        "cumulative_output_tokens": 194,
+        "cumulative_cost_usd": 0.00035716000000000003
+      }
+    ],
+    "selected_attempt": 0,
+    "refinements": [],
+    "uncertainty": {
+      "flagged": true,
+      "notice": "1 statement(s) could not be verified against the retrieved documents.",
+      "unsupported_claims": [
+        "The co-supervisor must come from the Retrieval and Reasoning Lab."
+      ],
+      "removed_sentences": []
+    },
+    "usage": {
+      "stages": [
+        {
+          "stage": "query_embedding",
+          "model": "text-embedding-3-small",
+          "input_tokens": 38,
+          "output_tokens": 0,
+          "estimated": true,
+          "cost_usd": 7.6e-07
+        },
+        {
+          "stage": "generation",
+          "model": "gpt-4o-mini",
+          "input_tokens": 771,
+          "output_tokens": 56,
+          "estimated": false,
+          "cost_usd": 0.00014925
+        },
+        {
+          "stage": "claim_extraction",
+          "model": "gpt-4o-mini",
+          "input_tokens": 218,
+          "output_tokens": 72,
+          "estimated": false,
+          "cost_usd": 7.589999999999999e-05
+        },
+        {
+          "stage": "verification_judge",
+          "model": "gpt-4o-mini",
+          "input_tokens": 611,
+          "output_tokens": 66,
+          "estimated": false,
+          "cost_usd": 0.00013125
+        }
+      ],
+      "input_tokens": 1638,
+      "output_tokens": 194,
+      "cost_usd": 0.00035716000000000003
+    },
+    "timings_ms": {
+      "retrieval": 754.8713000142016,
+      "generation": 1433.7929000030272,
+      "claim_extraction": 1542.4325999920256,
+      "verification": 35273.21330000996,
+      "total": 39025.43420001166
+    },
+    "total_latency_ms": 39025.43420001166,
+    "models": {
+      "chat": "gpt-4o-mini",
+      "embedding": "text-embedding-3-small",
+      "nli": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+    },
+    "config": {
+      "chunking": {
+        "chunk_size": 1000,
+        "chunk_overlap": 150
+      },
+      "baseline": {
+        "top_k": 5
+      },
+      "generation": {
+        "max_answer_tokens": 700
+      },
+      "proposed": {
+        "adaptive": false,
+        "verify": true
+      },
+      "complexity": {
+        "weights": {
+          "information_needs": 0.35,
+          "reasoning": 0.25,
+          "multi_source": 0.15,
+          "lexical": 0.15,
+          "llm_label": 0.1
+        },
+        "reasoning_scores": {
+          "lookup": 0.0,
+          "aggregation": 0.5,
+          "temporal": 0.5,
+          "comparison": 0.6,
+          "causal": 0.7,
+          "bridge": 1.0
+        },
+        "simple_max": 0.33,
+        "moderate_max": 0.66,
+        "max_tokens": 500
+      },
+      "adaptive": {
+        "k_simple": {
+          "min": 1,
+          "max": 3
+        },
+        "k_moderate": {
+          "min": 4,
+          "max": 7
+        },
+        "k_complex": {
+          "min": 8,
+          "max": 12
+        },
+        "k_cap": 15,
+        "decompose": true,
+        "max_subqueries": 4,
+        "rrf_k": 60,
+        "score_floor": 0.15,
+        "score_ceiling": 0.65,
+        "relevance_threshold": 0.4,
+        "confidence_weight_top1": 0.5,
+        "confidence_weight_mean": 0.2,
+        "confidence_weight_coverage": 0.3,
+        "confidence_threshold": 0.5,
+        "max_expansions": 1,
+        "expansion_step": 3
+      },
+      "verification": {
+        "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+        "window_sentences": 3,
+        "candidate_windows": 3,
+        "support_threshold": 0.75,
+        "contradiction_threshold": 0.75,
+        "partial_threshold": 0.4,
+        "use_llm_judge": true,
+        "pass_support_score": 0.9,
+        "max_claims": 12,
+        "max_retries": 0,
+        "refine_k": 3,
+        "max_tokens": 900
+      },
+      "pricing": {
+        "gpt-4o-mini": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        },
+        "gpt-4o": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        },
+        "gpt-4.1": {
+          "input_per_million": 2.0,
+          "output_per_million": 8.0
+        },
+        "gpt-4.1-mini": {
+          "input_per_million": 0.4,
+          "output_per_million": 1.6
+        },
+        "text-embedding-3-small": {
+          "input_per_million": 0.02,
+          "output_per_million": 0.0
+        },
+        "text-embedding-3-large": {
+          "input_per_million": 0.13,
+          "output_per_million": 0.0
+        }
+      }
+    },
+    "cached": false,
+    "cached_from": null,
+    "served_ms": null
+  }
+}

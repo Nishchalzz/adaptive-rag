@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { api } from '../api';
-import { Badge, Card, Empty, ErrorBox } from '../components/ui';
+import { Badge, Card, Empty, ErrorBox, PageHeader, SkeletonCard } from '../components/ui';
 import type { DocumentRecord } from '../types';
 
 const kb = (n: number) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
 
 export default function Documents() {
   const [docs, setDocs] = useState<DocumentRecord[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const input = useRef<HTMLInputElement>(null);
 
   const refresh = useCallback(() => {
-    api.documents().then((d) => setDocs(d.documents)).catch((e: Error) => setError(e.message));
+    api.documents().then((d) => { setDocs(d.documents); setLoaded(true); }).catch((e: Error) => { setError(e.message); setLoaded(true); });
   }, []);
   useEffect(refresh, [refresh]);
 
@@ -44,7 +45,8 @@ export default function Documents() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <PageHeader title="Documents" subtitle="The knowledge base the system answers from. Upload PDF, DOCX, TXT or Markdown files; they are cleaned, split into chunks, embedded and indexed. A few synthetic demo documents are pre-loaded." />
       <Card title="Upload documents">
         <label
           onDragOver={(e) => e.preventDefault()}
@@ -52,7 +54,7 @@ export default function Documents() {
             e.preventDefault();
             upload(e.dataTransfer.files);
           }}
-          className="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 border-dashed border-slate-300 p-8 text-sm text-slate-500 hover:border-sky-500 dark:border-slate-700"
+          className="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 border-dashed border-slate-300 p-8 text-sm text-slate-500 hover:border-indigo-500 hover:bg-indigo-50/40"
         >
           <span>{busy ? `Indexing ${busy}…` : 'Drop PDF, DOCX, TXT or Markdown files here, or click to choose'}</span>
           <input
@@ -73,12 +75,14 @@ export default function Documents() {
       </Card>
 
       <Card title={`Indexed documents (${docs.length})`}>
-        {docs.length === 0 ? (
-          <Empty>No documents yet.</Empty>
+        {!loaded ? (
+          <SkeletonCard lines={3} />
+        ) : docs.length === 0 ? (
+          <Empty>No documents yet. Drop a file above to index it.</Empty>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-xs uppercase text-slate-500">
+              <thead className="bg-slate-50 text-xs font-medium text-slate-600">
                 <tr>
                   <th className="py-2">File</th>
                   <th>Type</th>
@@ -92,7 +96,7 @@ export default function Documents() {
               </thead>
               <tbody>
                 {docs.map((d) => (
-                  <tr key={d.id} className="border-t border-slate-200 dark:border-slate-800">
+                  <tr key={d.id} className="border-t border-slate-200">
                     <td className="py-2 font-medium">{d.filename}</td>
                     <td>{d.file_type}</td>
                     <td>{kb(d.file_size)}</td>

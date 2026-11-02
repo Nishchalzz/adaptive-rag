@@ -36,7 +36,9 @@ from scripts.prepare_dataset import DATASETS, prepare
 LIMITATIONS = [
     "Small sample (test questions per group are listed above): confidence intervals are wide; treat differences whose CI includes 0 as unresolved, not as ties.",
     "Correctness is judged by an LLM against the MuSiQue gold answer and evidence support by an NLI model. Both are automatic and imperfect; no claims were labelled by humans, so judge/NLI error rates are unmeasured here.",
-    "The pipeline's chat model and the judge are both OpenAI models and may share blind spots; the evaluator NLI differs from the verifier NLI (different checkpoint and threshold) but both are MNLI-style models and share known weaknesses with numbers and dates.",
+    "The pipeline's chat model and the judge are both OpenAI models and may share blind spots; the evaluator NLI differs from the verifier NLI (different checkpoint, size and threshold) but both are SNLI/MNLI-trained cross-encoders and share known weaknesses with numbers, dates and multi-hop entailment.",
+    "The verifier used in these experiments is cross-encoder/nli-roberta-base, not the application default (DeBERTa-v3 base, which measured 1-3 s per pair on this CPU and made the suite impractical). Results describe this configuration; a stronger verifier may behave differently.",
+    "The evaluator NLI (MiniLM2, threshold 0.5) looks strict: spot checks of the per-question records show answers the LLM judge marks correct and that cite the right passage flagged as unsupported (long sentences with extra detail, or facts spread over passages). Absolute claim-support and citation values are therefore probably underestimates and were not validated against human labels; use them only for relative comparison between variants, and treat them as unverified until a human-labelled sample exists.",
     "Claims for evidence metrics are sentences of the answer, not atomic facts, so a sentence containing one unsupported fact among supported ones counts as supported if the NLI accepts it.",
     "'Simple' questions are single hops derived from MuSiQue decompositions with earlier answers substituted; 'moderate' and 'complex' are the original 2-hop and 3-4-hop questions. Complexity is therefore proxied by hop count, and the corpus (about 20 paragraphs per source question) is small, so retrieval is easier than on a large open corpus.",
     "MuSiQue gold evidence may be incomplete: a distractor paragraph can also contain the answer, which lowers measured precision.",
@@ -67,10 +69,13 @@ async def main(args: argparse.Namespace) -> int:
     added = await index_corpus(DATASETS / "musique_eval_corpus.jsonl", store, embeddings)
     print(f"corpus '{CORPUS_NAME}': {store.count(CORPUS_NAME)} paragraphs indexed ({added} newly)")
 
-    config = PipelineConfig()
+    # The application default verifier (DeBERTa-v3) measured 1-3 s per pair on this CPU with the installed
+    # transformers/torch, which made the suite impractical, so experiments use a faster checkpoint for the
+    # verifier. The evaluator uses a different checkpoint again (see docs/experimental_methodology.md).
+    config = PipelineConfig().with_overrides({"verification": {"nli_model": args.verifier_nli}})
     nli = NLIRegistry(device=settings.nli_device)
     nli.get(config.verification.nli_model).load()
-    evaluator_nli = HFEntailmentModel(settings.eval_nli_model, device=settings.nli_device)
+    evaluator_nli = HFEntailmentModel(args.evaluator_nli, device=settings.nli_device)
     evaluator_nli.load()
     chat = create_chat_model(settings)
     pipelines = build_pipelines(settings=settings, store=store, chat_model=chat, embeddings=embeddings, nli=nli)
@@ -104,7 +109,7 @@ async def main(args: argparse.Namespace) -> int:
         },
         "sweep_questions": len(sweep_items),
         "models": {"chat": settings.chat_model, "embedding": settings.embedding_model, "verifier_nli": config.verification.nli_model,
-                   "judge": settings.judge_model, "evaluator_nli": settings.eval_nli_model},
+                   "judge": settings.judge_model, "evaluator_nli": args.evaluator_nli},
         "config": config.model_dump(mode="json"),
         "llm": {"temperature": settings.llm_temperature, "seed": settings.llm_seed},
         "variants": variants,
@@ -130,5 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("--sweep-per-group", type=int, default=6, help="questions per group for the retry sweep")
     parser.add_argument("--concurrency", type=int, default=3)
     parser.add_argument("--no-sweeps", action="store_true")
+    parser.add_argument("--verifier-nli", default="cross-encoder/nli-roberta-base", help="NLI checkpoint used by the pipeline's verifier")
+    parser.add_argument("--evaluator-nli", default="cross-encoder/nli-MiniLM2-L6-H768", help="independent NLI checkpoint used for evaluation")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     raise SystemExit(asyncio.run(main(parser.parse_args())))

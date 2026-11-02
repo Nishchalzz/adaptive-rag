@@ -1,0 +1,415 @@
+{
+  "version": 1,
+  "key": "72d8ac382dd4d558bd13a73efbb9bade06fa0141fb7337a5afbe3407898f4c6c",
+  "question": "When was the Halvorsen Institute of Technology founded?",
+  "pipeline": "proposed",
+  "corpus": "default",
+  "overrides": {
+    "proposed": {
+      "adaptive": false,
+      "verify": true
+    },
+    "verification": {
+      "max_retries": 0
+    }
+  },
+  "corpus_fingerprint": [
+    "5699ba7ebf9a36384e289223faf2f1963aa57783961b038e93408649a907b7e7",
+    "67fd62ffc60aa43a8e1a9e3431341e8ac0c21de89a4b3959622ad08eab5ddf0c",
+    "6a5ecf9e3460c5455e64a3941c358b58908bebf85949f89cc9087d83f7567813"
+  ],
+  "recorded_at": "2026-11-02T04:11:35.096950Z",
+  "response": {
+    "query_id": "cdafee069f084fea9c1c8410512f35cc",
+    "created_at": "2026-11-02T04:11:35.096950Z",
+    "pipeline": "proposed",
+    "variant": {
+      "adaptive": false,
+      "decompose": false,
+      "verify": true
+    },
+    "corpus": "default",
+    "question": "When was the Halvorsen Institute of Technology founded?",
+    "answer": "The Halvorsen Institute of Technology was founded in 1987 [1].",
+    "citations": [
+      {
+        "number": 1,
+        "chunk_id": "13558065adfa4578bcd3eb048d347253:00000",
+        "doc_id": "13558065adfa4578bcd3eb048d347253",
+        "filename": "institute_overview.md",
+        "page": null
+      }
+    ],
+    "sentences": [
+      {
+        "index": 0,
+        "text": "The Halvorsen Institute of Technology was founded in 1987 [1].",
+        "citation_numbers": [
+          1
+        ],
+        "status": "supported"
+      }
+    ],
+    "invalid_citations": [],
+    "retrieval": {
+      "strategy": "fixed_top_k",
+      "k_requested": 5,
+      "k_final": 5,
+      "num_retrieved": 5,
+      "latency_ms": 524.4405000121333,
+      "embedding_latency_ms": 521.3981000124477,
+      "search_latency_ms": 3.0423999996855855,
+      "queries": [
+        "When was the Halvorsen Institute of Technology founded?"
+      ],
+      "confidence": null,
+      "expansions": 0,
+      "chunks": [
+        {
+          "chunk_id": "13558065adfa4578bcd3eb048d347253:00000",
+          "doc_id": "13558065adfa4578bcd3eb048d347253",
+          "filename": "institute_overview.md",
+          "page": null,
+          "chunk_index": 0,
+          "text": "Halvorsen Institute of Technology: Institute Overview\n\n> Synthetic demonstration document. The institute, people and figures described here are fictional.\n> They were written to test the retrieval and verification system, so the facts cannot be known to a\n> language model in advance.\nHistory\n\nThe Halvorsen Institute of Technology (HIT) was founded in 1987 in the city of Lindmark by the civil\nengineer Eva Halvorsen, who also served as its first president until 1999. The institute began with\ntwo schools and 640 students. In 2005 it opened its third school, the School of Biomedical Engineering.\nLeadership\n\nDr. Mira Okafor has been president of the institute since 2019. Before becoming president she was dean\nof the School of Computing from 2011 to 2019.\nSchools",
+          "score": 0.7314043641090393,
+          "rank": 1,
+          "citation_number": 1,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "e851b6377420494e8c14ff20fd9edfbd:00000",
+          "doc_id": "e851b6377420494e8c14ff20fd9edfbd",
+          "filename": "graduate_regulations.pdf",
+          "page": 1,
+          "chunk_index": 0,
+          "text": "HIT Graduate Study Regulations (2025 edition) Synthetic demonstration document. The institute and its rules are fictional. Section 1. Admission and credits 1.1 A master's programme at the Halvorsen Institute of Technology comprises 120 ECTS credits and normally takes two years of full-time study. 1.2 The master's thesis is worth 30 ECTS credits. 1.3 Applicants must hold a bachelor's degree with at least 180 ECTS credits. 1.4 Applications for the autumn intake must be submitted by 15 March.",
+          "score": 0.48725342750549316,
+          "rank": 2,
+          "citation_number": 2,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00000",
+          "doc_id": "ba0c82303fd649ba832a79ed2fa8c6bb",
+          "filename": "research_labs.md",
+          "page": null,
+          "chunk_index": 0,
+          "text": "Research Laboratories at the Halvorsen Institute of Technology\n\n> Synthetic demonstration document. The laboratories, people and figures described here are fictional.\nRetrieval and Reasoning Lab\n\nThe Retrieval and Reasoning Lab (RRL) belongs to the School of Computing and is located on the third\nfloor of Aster Hall. It was founded in 2016 and is led by Dr. Lena Park. The lab has 14 members: three\nfaculty members, eight doctoral students and three research engineers. In 2024 its research funding was\n2.4 million euros, about 70 percent of which came from the Nordic Research Council.\n\nThe lab runs two main projects. Project Veritas, started in 2022, develops methods that check whether\nstatements generated by language models are supported by source documents. Project Atlas, started in\n2023, studies multi-hop retrieval for questions that need information from several documents.\nGrid Storage Lab",
+          "score": 0.40836286544799805,
+          "rank": 3,
+          "citation_number": 3,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "13558065adfa4578bcd3eb048d347253:00001",
+          "doc_id": "13558065adfa4578bcd3eb048d347253",
+          "filename": "institute_overview.md",
+          "page": null,
+          "chunk_index": 1,
+          "text": "- School of Computing: dean Prof. Tomas Reyes since 2019. The school is based in Aster Hall.\n- School of Energy Systems: dean Prof. Anika Bergström since 2016. The school is based in Birch Pavilion.\n- School of Biomedical Engineering: dean Prof. Samuel Adeyemi since 2021. The school is based in Cedar Centre.\nCampus\n\nThe main campus covers 42 hectares on the northern bank of the river Vell. Aster Hall, the largest\nbuilding, was completed in 2003 and has six floors. Birch Pavilion was completed in 1991. Cedar Centre\nopened together with the School of Biomedical Engineering in 2005.\n\nThe Fenwick Library opened in 1994. It holds about 310,000 volumes and is open 24 hours a day during\nexamination periods.\nStudents and staff\n\nIn the 2024 academic year the institute had 9,400 students, of whom 38 percent were graduate students,\nand 1,150 academic staff. The School of Computing is the largest school, with 4,100 students.",
+          "score": 0.39366358518600464,
+          "rank": 4,
+          "citation_number": 4,
+          "retrieved_by": "original_query"
+        },
+        {
+          "chunk_id": "ba0c82303fd649ba832a79ed2fa8c6bb:00002",
+          "doc_id": "ba0c82303fd649ba832a79ed2fa8c6bb",
+          "filename": "research_labs.md",
+          "page": null,
+          "chunk_index": 2,
+          "text": "The institute's high-performance computing cluster, called Nordlys, is located in the basement of Aster\nHall and has 96 GPU nodes. All three laboratories book time on Nordlys through the research office.",
+          "score": 0.3571142554283142,
+          "rank": 5,
+          "citation_number": 5,
+          "retrieved_by": "original_query"
+        }
+      ]
+    },
+    "complexity": null,
+    "verification": {
+      "claims": [
+        {
+          "claim_id": "a0c0",
+          "text": "The Halvorsen Institute of Technology was founded in 1987.",
+          "sentence_index": 0,
+          "citations": [
+            1
+          ],
+          "status": "supported",
+          "citation_status": "correct",
+          "failure": null,
+          "method": "nli",
+          "evidence": {
+            "citation_number": 1,
+            "chunk_id": "13558065adfa4578bcd3eb048d347253:00000",
+            "filename": "institute_overview.md",
+            "page": null,
+            "text": "The Halvorsen Institute of Technology (HIT) was founded in 1987 in the city of Lindmark by the civil engineer Eva Halvorsen, who also served as its first president until 1999. The institute began with",
+            "similarity": 0.7973,
+            "entailment": 0.998,
+            "neutral": 0.0015,
+            "contradiction": 0.0005
+          },
+          "suggested_citation": null,
+          "judge_rationale": null,
+          "judge_quote": null,
+          "judge_quote_verified": null
+        }
+      ],
+      "support_score": 1.0,
+      "citation_accuracy": 1.0,
+      "num_supported": 1,
+      "num_partial": 0,
+      "num_unsupported": 0,
+      "passed": true,
+      "abstained": false,
+      "extraction_fallback": false,
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "latency_ms": 3532.2522000060417,
+      "timings_ms": {
+        "embedding": 2.0,
+        "nli": 3530.0,
+        "nli_pairs": 3.0,
+        "judge": 0.1
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "answer": "The Halvorsen Institute of Technology was founded in 1987 [1].",
+        "sentences": [
+          {
+            "index": 0,
+            "text": "The Halvorsen Institute of Technology was founded in 1987 [1].",
+            "citation_numbers": [
+              1
+            ],
+            "status": "supported"
+          }
+        ],
+        "invalid_citations": [],
+        "num_context_chunks": 5,
+        "verification": {
+          "claims": [
+            {
+              "claim_id": "a0c0",
+              "text": "The Halvorsen Institute of Technology was founded in 1987.",
+              "sentence_index": 0,
+              "citations": [
+                1
+              ],
+              "status": "supported",
+              "citation_status": "correct",
+              "failure": null,
+              "method": "nli",
+              "evidence": {
+                "citation_number": 1,
+                "chunk_id": "13558065adfa4578bcd3eb048d347253:00000",
+                "filename": "institute_overview.md",
+                "page": null,
+                "text": "The Halvorsen Institute of Technology (HIT) was founded in 1987 in the city of Lindmark by the civil engineer Eva Halvorsen, who also served as its first president until 1999. The institute began with",
+                "similarity": 0.7973,
+                "entailment": 0.998,
+                "neutral": 0.0015,
+                "contradiction": 0.0005
+              },
+              "suggested_citation": null,
+              "judge_rationale": null,
+              "judge_quote": null,
+              "judge_quote_verified": null
+            }
+          ],
+          "support_score": 1.0,
+          "citation_accuracy": 1.0,
+          "num_supported": 1,
+          "num_partial": 0,
+          "num_unsupported": 0,
+          "passed": true,
+          "abstained": false,
+          "extraction_fallback": false,
+          "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+          "latency_ms": 3532.2522000060417,
+          "timings_ms": {
+            "embedding": 2.0,
+            "nli": 3530.0,
+            "nli_pairs": 3.0,
+            "judge": 0.1
+          }
+        },
+        "latency_ms": 5289.717999985442,
+        "cumulative_latency_ms": 5816.495000006398,
+        "cumulative_input_tokens": 2963,
+        "cumulative_output_tokens": 42,
+        "cumulative_cost_usd": 0.00022876
+      }
+    ],
+    "selected_attempt": 0,
+    "refinements": [],
+    "uncertainty": {
+      "flagged": false,
+      "notice": null,
+      "unsupported_claims": [],
+      "removed_sentences": []
+    },
+    "usage": {
+      "stages": [
+        {
+          "stage": "query_embedding",
+          "model": "text-embedding-3-small",
+          "input_tokens": 12,
+          "output_tokens": 0,
+          "estimated": true,
+          "cost_usd": 2.4e-07
+        },
+        {
+          "stage": "generation",
+          "model": "gpt-4o-mini",
+          "input_tokens": 935,
+          "output_tokens": 16,
+          "estimated": false,
+          "cost_usd": 0.00014984999999999998
+        },
+        {
+          "stage": "verification_embedding",
+          "model": "text-embedding-3-small",
+          "input_tokens": 1841,
+          "output_tokens": 0,
+          "estimated": true,
+          "cost_usd": 3.682e-05
+        },
+        {
+          "stage": "claim_extraction",
+          "model": "gpt-4o-mini",
+          "input_tokens": 175,
+          "output_tokens": 26,
+          "estimated": false,
+          "cost_usd": 4.185e-05
+        }
+      ],
+      "input_tokens": 2963,
+      "output_tokens": 42,
+      "cost_usd": 0.00022876
+    },
+    "timings_ms": {
+      "retrieval": 524.5375000231434,
+      "generation": 805.2653000049759,
+      "claim_extraction": 950.8234999957494,
+      "verification": 3532.386500010034,
+      "total": 5817.718300007982
+    },
+    "total_latency_ms": 5817.718300007982,
+    "models": {
+      "chat": "gpt-4o-mini",
+      "embedding": "text-embedding-3-small",
+      "nli": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+    },
+    "config": {
+      "chunking": {
+        "chunk_size": 1000,
+        "chunk_overlap": 150
+      },
+      "baseline": {
+        "top_k": 5
+      },
+      "generation": {
+        "max_answer_tokens": 700
+      },
+      "proposed": {
+        "adaptive": false,
+        "verify": true
+      },
+      "complexity": {
+        "weights": {
+          "information_needs": 0.35,
+          "reasoning": 0.25,
+          "multi_source": 0.15,
+          "lexical": 0.15,
+          "llm_label": 0.1
+        },
+        "reasoning_scores": {
+          "lookup": 0.0,
+          "aggregation": 0.5,
+          "temporal": 0.5,
+          "comparison": 0.6,
+          "causal": 0.7,
+          "bridge": 1.0
+        },
+        "simple_max": 0.33,
+        "moderate_max": 0.66,
+        "max_tokens": 500
+      },
+      "adaptive": {
+        "k_simple": {
+          "min": 1,
+          "max": 3
+        },
+        "k_moderate": {
+          "min": 4,
+          "max": 7
+        },
+        "k_complex": {
+          "min": 8,
+          "max": 12
+        },
+        "k_cap": 15,
+        "decompose": true,
+        "max_subqueries": 4,
+        "rrf_k": 60,
+        "score_floor": 0.15,
+        "score_ceiling": 0.65,
+        "relevance_threshold": 0.4,
+        "confidence_weight_top1": 0.5,
+        "confidence_weight_mean": 0.2,
+        "confidence_weight_coverage": 0.3,
+        "confidence_threshold": 0.5,
+        "max_expansions": 1,
+        "expansion_step": 3
+      },
+      "verification": {
+        "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+        "window_sentences": 3,
+        "candidate_windows": 3,
+        "support_threshold": 0.75,
+        "contradiction_threshold": 0.75,
+        "partial_threshold": 0.4,
+        "use_llm_judge": true,
+        "pass_support_score": 0.9,
+        "max_claims": 12,
+        "max_retries": 0,
+        "refine_k": 3,
+        "max_tokens": 900
+      },
+      "pricing": {
+        "gpt-4o-mini": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        },
+        "gpt-4o": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        },
+        "gpt-4.1": {
+          "input_per_million": 2.0,
+          "output_per_million": 8.0
+        },
+        "gpt-4.1-mini": {
+          "input_per_million": 0.4,
+          "output_per_million": 1.6
+        },
+        "text-embedding-3-small": {
+          "input_per_million": 0.02,
+          "output_per_million": 0.0
+        },
+        "text-embedding-3-large": {
+          "input_per_million": 0.13,
+          "output_per_million": 0.0
+        }
+      }
+    },
+    "cached": false,
+    "cached_from": null,
+    "served_ms": null
+  }
+}

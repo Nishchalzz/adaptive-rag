@@ -1,13 +1,34 @@
 {
   "corpus_note": "Questions over the synthetic Halvorsen Institute documents that are indexed automatically on first start.",
   "questions": [
-    {"category": "simple", "question": "When was the Halvorsen Institute of Technology founded?"},
-    {"category": "simple", "question": "Who leads the Retrieval and Reasoning Lab?"},
-    {"category": "simple", "question": "How many ECTS credits is the master's thesis worth?"},
-    {"category": "moderate", "question": "Which building houses the lab that runs Project Veritas?"},
-    {"category": "moderate", "question": "Which was founded earlier, the Retrieval and Reasoning Lab or the Neural Interfaces Lab, and by how many years?"},
-    {"category": "complex", "question": "Who is the dean of the school whose lab commissioned the 4 megawatt-hour pilot plant, and since when have they held that role?"},
-    {"category": "complex", "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?"},
-    {"category": "unanswerable", "question": "What is the annual budget of the Fenwick Library?"}
-  ]
+    {
+      "category": "simple",
+      "question": "When was the Halvorsen Institute of Technology founded?"
+    },
+    {
+      "category": "simple",
+      "question": "Who leads the Retrieval and Reasoning Lab?"
+    },
+    {
+      "category": "simple",
+      "question": "How many ECTS credits is the master's thesis worth?"
+    },
+    {
+      "category": "moderate",
+      "question": "Which building houses the lab that runs Project Veritas?"
+    },
+    {
+      "category": "moderate",
+      "question": "Which was founded earlier, the Retrieval and Reasoning Lab or the Neural Interfaces Lab, and by how many years?"
+    },
+    {
+      "category": "complex",
+      "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?"
+    },
+    {
+      "category": "unanswerable",
+      "question": "What is the annual budget of the Fenwick Library?"
+    }
+  ],
+  "selection_note": "Hand-picked examples where recorded real runs show the proposed system ahead of the baseline (fewer chunks with the same answer, or fewer unsupported claims). They are not a random sample; see docs/experimental_methodology.md for the full benchmark, where results are mixed."
 }

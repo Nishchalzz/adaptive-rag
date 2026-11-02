@@ -14,6 +14,7 @@ from app.core.llm import MISSING_KEY_MESSAGE
 from app.database.models import QueryLogRow
 from app.database.repositories import QueryLogRepository
 from app.schemas.query import PipelineName, QueryLogSummary, QueryResponse
+from app.workflows.demo_cache import DemoCache, replay_events
 
 logger = logging.getLogger(__name__)
 
@@ -26,10 +27,14 @@ class Pipeline(Protocol):
 
 class QueryService:
     def __init__(
-        self, pipelines: Mapping[PipelineName, Pipeline], sessionmaker: async_sessionmaker[AsyncSession]
+        self,
+        pipelines: Mapping[PipelineName, Pipeline],
+        sessionmaker: async_sessionmaker[AsyncSession],
+        demo_cache: DemoCache | None = None,
     ) -> None:
         self._pipelines = pipelines
         self._sessionmaker = sessionmaker
+        self._demo_cache = demo_cache
 
     @property
     def available(self) -> bool:
@@ -40,15 +45,48 @@ class QueryService:
             raise LLMNotConfiguredError(MISSING_KEY_MESSAGE)
         return self._pipelines[name]
 
-    async def answer(self, question: str, pipeline: PipelineName, corpus: str, config: PipelineConfig) -> QueryResponse:
-        response = await self._pipeline(pipeline).run(question, corpus, config)
+    async def _replay(
+        self, question: str, pipeline: PipelineName, corpus: str, config: PipelineConfig,
+        overrides: dict[str, Any] | None, use_cache: bool,
+    ) -> QueryResponse | None:
+        if not use_cache or self._demo_cache is None:
+            return None
+        return await self._demo_cache.lookup(question, pipeline, corpus, overrides, config)
+
+    async def answer(
+        self,
+        question: str,
+        pipeline: PipelineName,
+        corpus: str,
+        config: PipelineConfig,
+        *,
+        overrides: dict[str, Any] | None = None,
+        use_cache: bool = True,
+    ) -> QueryResponse:
+        response = await self._replay(question, pipeline, corpus, config, overrides, use_cache)
+        if response is None:
+            response = await self._pipeline(pipeline).run(question, corpus, config)
         await self.record(response)
         return response
 
     async def stream(
-        self, question: str, pipeline: PipelineName, corpus: str, config: PipelineConfig
+        self,
+        question: str,
+        pipeline: PipelineName,
+        corpus: str,
+        config: PipelineConfig,
+        *,
+        overrides: dict[str, Any] | None = None,
+        use_cache: bool = True,
     ) -> AsyncIterator[dict[str, Any]]:
         """Progress events for pipelines that support them; the final event carries the response."""
+        replayed = await self._replay(question, pipeline, corpus, config, overrides, use_cache)
+        if replayed is not None:
+            for event in replay_events(replayed):
+                yield event
+            await self.record(replayed)
+            yield {"type": "result", "response": replayed}
+            return
         selected = self._pipeline(pipeline)
         if hasattr(selected, "stream"):
             async for event in selected.stream(question, corpus, config):
@@ -66,7 +104,7 @@ class QueryService:
         verification = response.verification
         logger.info(
             "query=%s pipeline=%s variant=%s complexity=%s score=%s k=%d retrieved=%d retrieval_ms=%.1f "
-            "support=%s total_ms=%.1f tokens=%d/%d question=%r",
+            "support=%s total_ms=%.1f tokens=%d/%d cached=%s question=%r",
             response.query_id,
             response.pipeline.value,
             response.variant,
@@ -79,6 +117,7 @@ class QueryService:
             response.total_latency_ms,
             response.usage.input_tokens,
             response.usage.output_tokens,
+            response.cached,
             response.question,
         )
         row = QueryLogRow(

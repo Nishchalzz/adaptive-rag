@@ -24,7 +24,7 @@ function SentenceText({ sentence, onCite }: { sentence: Sentence; onCite: (n: nu
             <button
               key={`${i}-${n}`}
               onClick={() => onCite(n)}
-              className="mx-0.5 rounded bg-slate-900/10 px-1 text-xs font-semibold text-sky-700 hover:bg-sky-200 dark:bg-white/10 dark:text-sky-300 dark:hover:bg-sky-900"
+              className="mx-0.5 rounded bg-slate-900/10 px-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-200"
             >
               [{n}]
             </button>
@@ -38,7 +38,7 @@ function SentenceText({ sentence, onCite }: { sentence: Sentence; onCite: (n: nu
 export function ChunkPopover({ chunk, onClose }: { chunk: RetrievedChunk | undefined; onClose: () => void }) {
   if (!chunk) return null;
   return (
-    <div className="mt-3 rounded-lg border border-sky-300 bg-sky-50 p-3 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+    <div className="mt-3 rounded-lg border border-indigo-300 bg-indigo-50 p-3 text-sm">
       <div className="mb-1 flex items-center justify-between">
         <strong>
           [{chunk.citation_number}] {sourceLabel(chunk.filename, chunk.page)}
@@ -64,7 +64,7 @@ export function AnswerView({ response }: { response: QueryResponse }) {
   return (
     <div>
       {response.uncertainty?.flagged && (
-        <div className="mb-3 rounded-lg border border-amber-400 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+        <div className="mb-3 rounded-lg border border-amber-400 bg-amber-50 p-3 text-sm text-amber-900">
           <strong>Uncertainty: </strong>
           {response.uncertainty.notice}
           {response.uncertainty.unsupported_claims.length > 0 && (
@@ -101,7 +101,7 @@ export function AnswerView({ response }: { response: QueryResponse }) {
           <ul className="space-y-1 text-sm">
             {response.citations.map((c) => (
               <li key={c.number}>
-                <button className="text-sky-700 hover:underline dark:text-sky-300" onClick={() => setOpen(c.number)}>
+                <button className="text-indigo-700 hover:underline" onClick={() => setOpen(c.number)}>
                   [{c.number}]
                 </button>{' '}
                 {sourceLabel(c.filename, c.page)}

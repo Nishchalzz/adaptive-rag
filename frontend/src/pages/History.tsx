@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api';
-import { Badge, Card, Empty, ErrorBox, ms, usd } from '../components/ui';
+import { Badge, Card, Empty, ErrorBox, PageHeader, SkeletonCard, ms } from '../components/ui';
 import type { QueryLog } from '../types';
 
 export default function History() {
@@ -14,12 +14,15 @@ export default function History() {
 
   if (error) return <ErrorBox message={error} />;
   return (
-    <Card title="Query history">
-      {logs && logs.length === 0 && <Empty>No queries yet.</Empty>}
+    <div className="space-y-6">
+    <PageHeader title="History" subtitle="Every question answered so far, with the complexity label, retrieval depth, and latency that were logged for it." />
+    <Card>
+      {logs === null && <SkeletonCard lines={4} />}
+      {logs && logs.length === 0 && <Empty>No queries yet. Ask a question in Chat and it will be logged here.</Empty>}
       {logs && logs.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="text-xs uppercase text-slate-500">
+            <thead className="bg-slate-50 text-xs font-medium text-slate-600">
               <tr>
                 <th className="py-2">Question</th>
                 <th>Pipeline</th>
@@ -29,13 +32,12 @@ export default function History() {
                 <th>Retrieval</th>
                 <th>Total</th>
                 <th>Tokens</th>
-                <th>Cost</th>
                 <th />
               </tr>
             </thead>
             <tbody>
               {logs.map((l) => (
-                <tr key={l.id} className="border-t border-slate-200 dark:border-slate-800">
+                <tr key={l.id} className="border-t border-slate-200">
                   <td className="max-w-xs truncate py-2" title={l.question}>
                     {l.question}
                   </td>
@@ -48,13 +50,12 @@ export default function History() {
                   <td>{ms(l.retrieval_latency_ms)}</td>
                   <td>{ms(l.total_latency_ms)}</td>
                   <td>{l.input_tokens + l.output_tokens}</td>
-                  <td>{usd(l.cost_usd)}</td>
                   <td className="whitespace-nowrap text-xs">
-                    <Link className="text-sky-700 hover:underline dark:text-sky-300" to={`/insights/${l.id}`}>
+                    <Link className="text-indigo-700 hover:underline" to={`/insights/${l.id}`}>
                       insights
                     </Link>{' '}
                     {l.pipeline === 'proposed' && (
-                      <Link className="text-sky-700 hover:underline dark:text-sky-300" to={`/verification/${l.id}`}>
+                      <Link className="text-indigo-700 hover:underline" to={`/verification/${l.id}`}>
                         verification
                       </Link>
                     )}
@@ -66,5 +67,6 @@ export default function History() {
         </div>
       )}
     </Card>
+    </div>
   );
 }

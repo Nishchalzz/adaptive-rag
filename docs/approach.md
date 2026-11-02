@@ -563,3 +563,36 @@ answers.
 **Q14. Can the claim "adaptive RAG is better" be made now?**
 No. It can be made only if the held-out test results, with confidence intervals, show it. If they do not,
 the report states that.
+
+---
+
+## Appendix: demo replay cache
+
+Live verified answers take tens of seconds on a CPU, which is awkward in a live demo. For the bundled sample
+questions the backend can therefore **replay a saved real run**.
+
+**Honesty rule.** Every cached entry is the actual JSON a live pipeline run returned
+(`scripts/build_demo_cache.py` calls the running backend with `use_cache=false` and stores the responses in
+`backend/seed/demo_cache/`). Nothing is written by hand and nothing is edited. A replay returns that recorded
+response unchanged, including its **original** latency, token counts and cost; it only adds `cached=true`,
+`cached_from` (when it was recorded) and `served_ms` (how long the replay took). The UI says so on every
+replayed answer ("Replayed from a saved real run ...") and offers **Run live instead**; a request with
+`use_cache=false` always runs the pipeline.
+
+**When an entry is served.** Only if all of these still hold, otherwise the question is answered live:
+
+1. same normalised question (trimmed, whitespace-collapsed, lower-cased), pipeline, corpus and request overrides
+   (the cache key; baseline, proposed and the side-by-side "baseline audit" are separate entries);
+2. the ready documents indexed in the corpus are exactly those present when it was recorded (compared by content
+   hash, so uploading or deleting any document disables the replay);
+3. the same chat and embedding model IDs and the same resolved pipeline configuration.
+
+Replays are logged in the query log like any other query (with `cached` set in the stored trace). Rebuild the
+cache after changing the demo questions, documents, models or configuration:
+
+```bash
+cd backend
+python -m scripts.build_demo_cache --base http://127.0.0.1:8000   # backend must be running with the demo corpus
+```
+
+Set `DEMO_CACHE_ENABLED=false` to turn replays off entirely.

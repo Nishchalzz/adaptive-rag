@@ -24,6 +24,7 @@ def settings(tmp_path: Path) -> Settings:
         database_url=None,
         preload_nli=False,
         seed_demo_corpus=False,
+        demo_cache_dir=tmp_path / "demo_cache",
     )
 
 

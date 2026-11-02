@@ -86,6 +86,9 @@ class VerificationReport(BaseModel):
     extraction_fallback: bool
     nli_model: str
     latency_ms: float
+    timings_ms: dict[str, float] = Field(
+        default_factory=dict, description="Verification sub-stages: embedding, nli, nli_pairs (count), judge."
+    )
 
 
 class RefinementStep(BaseModel):

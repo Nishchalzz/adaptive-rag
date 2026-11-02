@@ -29,6 +29,11 @@ class QueryRequest(BaseModel):
         description="Per-request PipelineConfig overrides, e.g. {'baseline': {'top_k': 8}} or "
         "{'proposed': {'verify': false}} for an ablation variant.",
     )
+    use_cache: bool = Field(
+        True,
+        description="Allow replaying a saved real run of a bundled demo question (see demo_cache). "
+        "Set false to always run the pipeline live.",
+    )
 
 
 class RetrievedChunk(BaseModel):
@@ -126,6 +131,9 @@ class QueryResponse(BaseModel):
     total_latency_ms: float
     models: dict[str, str]
     config: dict[str, Any]
+    cached: bool = Field(False, description="True when this response is a replay of a saved real run.")
+    cached_from: datetime | None = Field(None, description="When the replayed run was originally recorded.")
+    served_ms: float | None = Field(None, description="Time taken to serve the replay; the pipeline timings stay those of the original run.")
 
 
 class QueryLogSummary(BaseModel):

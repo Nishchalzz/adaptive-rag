@@ -25,6 +25,7 @@ from app.verification.evidence_matcher import EvidenceMatcher
 from app.verification.nli import NLIRegistry
 from app.verification.verifier import EvidenceVerifier
 from app.workflows.baseline_pipeline import BaselineRAGPipeline
+from app.workflows.demo_cache import DemoCache
 from app.workflows.query_service import Pipeline, QueryService
 from app.workflows.rag_graph import ProposedComponents, ProposedRAGPipeline
 
@@ -94,7 +95,7 @@ async def build_container(
 ) -> ServiceContainer:
     """Injected components (tests) take precedence over those created from settings."""
     pipeline_config = load_pipeline_config(settings.pipeline_config_path)
-    assert settings.database_url and settings.chroma_dir and settings.upload_dir  # derived in Settings
+    assert settings.database_url and settings.chroma_dir and settings.upload_dir and settings.demo_cache_dir  # derived
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
 
     engine = create_engine(settings.database_url)
@@ -132,6 +133,16 @@ async def build_container(
         store=store,
         nli=nli,
         documents=documents,
-        queries=QueryService(pipelines, sessionmaker),
+        queries=QueryService(
+            pipelines,
+            sessionmaker,
+            demo_cache=DemoCache(
+                settings.demo_cache_dir,
+                sessionmaker,
+                chat_model=settings.chat_model,
+                embedding_model=settings.embedding_model,
+                enabled=settings.demo_cache_enabled,
+            ),
+        ),
         pipelines=pipelines,
     )

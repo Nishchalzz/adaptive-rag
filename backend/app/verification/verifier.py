@@ -99,6 +99,14 @@ def _span(scored: _Scored) -> EvidenceSpan:
 
 
 class EvidenceVerifier:
+    async def prefetch(
+        self, chunks: list[RetrievedChunk], config: VerificationConfig, usage: UsageTracker, embedding_cache: dict[str, list[float]]
+    ) -> None:
+        """Warm the evidence-window embeddings; safe to run concurrently with claim extraction."""
+        await self._matcher.prefetch(
+            chunks, window_sentences=config.window_sentences, cache=embedding_cache, usage=usage
+        )
+
     def __init__(
         self, *, nli: NLIRegistry, matcher: EvidenceMatcher, judge_model: BaseChatModel, judge_model_name: str
     ) -> None:
@@ -124,28 +132,34 @@ class EvidenceVerifier:
                 nli_model=model.name, latency_ms=(perf_counter() - started) * 1000,
             )
 
+        timings: dict[str, float] = {}
+        embed_started = perf_counter()
         index = await self._matcher.build_index(
             chunks, [c.text for c in claims], window_sentences=config.window_sentences, cache=embedding_cache, usage=usage
         )
+        timings["embedding"] = (perf_counter() - embed_started) * 1000
         valid = {c.citation_number for c in chunks}
         cited = [set(c.citations) & valid for c in claims]
         top_m = config.candidate_windows
+        threshold = config.support_threshold
 
         cited_candidates = [index.candidates(i, cited[i], top_m) if cited[i] else [] for i in range(len(claims))]
         cited_decisions = [
-            _decide(s, config) for s in await self._score(model, claims, cited_candidates)
+            _decide(s, config) for s in await self._score(model, claims, cited_candidates, threshold, timings)
         ]
 
         need_other = [i for i, d in enumerate(cited_decisions) if d.kind != "supported"]
         other_candidates = [index.candidates(i, valid - cited[i], top_m) for i in need_other]
-        other_scored = await self._score(model, [claims[i] for i in need_other], other_candidates)
+        other_scored = await self._score(model, [claims[i] for i in need_other], other_candidates, threshold, timings)
         other_decisions = {i: _decide(s, config) for i, s in zip(need_other, other_scored, strict=True)}
 
+        judge_started = perf_counter()
         tasks = [
             self._resolve(claims[i], cited[i], cited_decisions[i], other_decisions.get(i), index, i, chunks, config, usage)
             for i in range(len(claims))
         ]
         results = list(await asyncio.gather(*tasks))
+        timings["judge"] = (perf_counter() - judge_started) * 1000
 
         supported = sum(r.status is SupportStatus.SUPPORTED for r in results)
         partial = sum(r.status is SupportStatus.PARTIAL for r in results)
@@ -168,36 +182,61 @@ class EvidenceVerifier:
             extraction_fallback=False,
             nli_model=model.name,
             latency_ms=(perf_counter() - started) * 1000,
+            timings_ms={k: round(v, 1) for k, v in timings.items()},
         )
 
     async def _score(
-        self, model: EntailmentModel, claims: list[Claim], candidates: list[list[EvidenceWindow]]
+        self,
+        model: EntailmentModel,
+        claims: list[Claim],
+        candidates: list[list[EvidenceWindow]],
+        support_threshold: float,
+        timings: dict[str, float],
     ) -> list[list[_Scored]]:
-        """NLI-score each claim against its candidate windows, the whole passages those windows come
-        from (windows can lose the entity a passage is about, e.g. "the lab"), and the two best
-        passages combined (claims that join facts from two passages)."""
-        pairs: list[tuple[str, str]] = []
-        owners: list[tuple[int, EvidenceWindow]] = []
-        for i, (claim, windows) in enumerate(zip(claims, candidates, strict=True)):
-            tested = list(windows)
+        """NLI-score each claim against its candidate windows, then (only for claims no window already
+        supports) the whole passages those windows come from (windows can lose the entity a passage is
+        about, e.g. "the lab") and the two best passages combined (claims joining facts from two passages).
+
+        The long pairs cost several times more than windows, and a claim entailed by a window is
+        "supported" whatever the long pairs say, so skipping them changes no verdict: contradiction and
+        ambiguity are decided only for claims that reach the second stage, with the full pair set."""
+        grouped: list[list[_Scored]] = [[] for _ in claims]
+        await self._run_pairs(model, [(i, w) for i, ws in enumerate(candidates) for w in ws], claims, grouped, timings)
+
+        extra: list[tuple[int, EvidenceWindow]] = []
+        for i, windows in enumerate(candidates):
+            if any(s.nli.entailment >= support_threshold for s in grouped[i]):
+                continue
             passages = list({w.chunk.chunk_id: w for w in windows}.values())  # best window per passage
             for best in passages:
                 if best.chunk.text != best.text:
-                    tested.append(EvidenceWindow(best.chunk, best.chunk.text, best.similarity))
+                    extra.append((i, EvidenceWindow(best.chunk, best.chunk.text, best.similarity)))
             if len(passages) >= 2:
                 first, second = passages[0], passages[1]
-                tested.append(EvidenceWindow(first.chunk, f"{first.chunk.text}\n{second.chunk.text}", first.similarity))
+                extra.append((i, EvidenceWindow(first.chunk, f"{first.chunk.text}\n{second.chunk.text}", first.similarity)))
             elif len(windows) >= 2 and windows[0].text != windows[1].text:
                 first, second = windows[0], windows[1]
-                tested.append(EvidenceWindow(first.chunk, f"{first.text} {second.text}", first.similarity))
-            for window in tested:
-                pairs.append((window.text, claim.text))
-                owners.append((i, window))
+                extra.append((i, EvidenceWindow(first.chunk, f"{first.text} {second.text}", first.similarity)))
+        await self._run_pairs(model, extra, claims, grouped, timings)
+        return grouped
+
+    @staticmethod
+    async def _run_pairs(
+        model: EntailmentModel,
+        owners: list[tuple[int, EvidenceWindow]],
+        claims: list[Claim],
+        grouped: list[list[_Scored]],
+        timings: dict[str, float],
+    ) -> None:
+        if not owners:
+            return
+        pairs = [(window.text, claims[i].text) for i, window in owners]
+        started = perf_counter()
         scores = await asyncio.to_thread(model.score, pairs)
-        grouped: list[list[_Scored]] = [[] for _ in claims]
+        timings["nli"] = timings.get("nli", 0.0) + (perf_counter() - started) * 1000
+        timings["nli_pairs"] = timings.get("nli_pairs", 0.0) + len(pairs)
         for (i, window), result in zip(owners, scores, strict=True):
             grouped[i].append(_Scored(window, result))
-        return grouped
 
     async def _resolve(
         self,

@@ -27,7 +27,9 @@ def _resolve(request: QueryRequest, container: ServiceContainer) -> tuple[Any, s
 @router.post("/query", response_model=QueryResponse)
 async def run_query(request: QueryRequest, container: Container) -> QueryResponse:
     config, corpus = _resolve(request, container)
-    return await container.queries.answer(request.question, request.pipeline, corpus, config)
+    return await container.queries.answer(
+        request.question, request.pipeline, corpus, config, overrides=request.overrides, use_cache=request.use_cache
+    )
 
 
 def _sse(event: dict[str, Any]) -> str:
@@ -38,7 +40,9 @@ def _sse(event: dict[str, Any]) -> str:
 async def stream_query(request: QueryRequest, container: Container) -> StreamingResponse:
     """Server-sent events: one ``step`` event per pipeline node, then ``result`` (or ``error``)."""
     config, corpus = _resolve(request, container)
-    events = container.queries.stream(request.question, request.pipeline, corpus, config)
+    events = container.queries.stream(
+        request.question, request.pipeline, corpus, config, overrides=request.overrides, use_cache=request.use_cache
+    )
     # Pull the first event before responding, so configuration errors still become normal HTTP errors.
     first = await anext(events)
 

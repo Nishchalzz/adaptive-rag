@@ -1,5 +1,5 @@
 import { TraceView } from '../components/TraceView';
-import { Badge, Bar, Card, Stat, ms, sourceLabel, usd } from '../components/ui';
+import { Badge, Bar, Card, Stat, ms, sourceLabel } from '../components/ui';
 import type { QueryResponse } from '../types';
 
 const BAND = { simple: 'bg-emerald-500', moderate: 'bg-amber-500', complex: 'bg-red-500' } as const;
@@ -31,7 +31,7 @@ function Insights({ r }: { r: QueryResponse }) {
         <Stat label="Selected k" value={rt.k_requested} hint={rt.k_final != null && rt.k_final !== rt.k_requested ? `expanded to ${rt.k_final}` : undefined} />
         <Stat label="Chunks given to LLM" value={rt.num_retrieved} hint={`${rt.expansions} expansion(s)`} />
         <Stat label="Retrieval latency" value={ms(rt.latency_ms)} hint={`embed ${ms(rt.embedding_latency_ms)} · search ${ms(rt.search_latency_ms)}`} />
-        <Stat label="Total latency" value={ms(r.total_latency_ms)} hint={`${r.usage.input_tokens + r.usage.output_tokens} tokens · ${usd(r.usage.cost_usd)}`} />
+        <Stat label="Total latency" value={ms(r.total_latency_ms)} hint={`${r.usage.input_tokens + r.usage.output_tokens} tokens`} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -40,7 +40,7 @@ function Insights({ r }: { r: QueryResponse }) {
             <div className="space-y-3 text-sm">
               <div className="relative h-3 rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500">
                 <div
-                  className="absolute -top-1 h-5 w-1.5 rounded bg-slate-900 dark:bg-white"
+                  className="absolute -top-1 h-5 w-1.5 rounded bg-slate-900"
                   style={{ left: `calc(${c.score * 100}% - 3px)` }}
                 />
               </div>
@@ -106,26 +106,25 @@ function Insights({ r }: { r: QueryResponse }) {
               {timings.map(([k, v]) => (
                 <div key={k} className="flex items-center gap-2 text-xs">
                   <span className="w-32 shrink-0 text-slate-500">{k}</span>
-                  <div className="h-2 flex-1 rounded-full bg-slate-200 dark:bg-slate-800">
-                    <div className="h-full rounded-full bg-sky-500" style={{ width: `${(v / maxTiming) * 100}%` }} />
+                  <div className="h-2 flex-1 rounded-full bg-slate-200">
+                    <div className="h-full rounded-full bg-indigo-500" style={{ width: `${(v / maxTiming) * 100}%` }} />
                   </div>
                   <span className="w-16 text-right tabular-nums">{ms(v)}</span>
                 </div>
               ))}
             </div>
           </Card>
-          <Card title="Token usage and cost by stage">
+          <Card title="Token usage by stage">
             <table className="w-full text-xs">
               <tbody>
                 {r.usage.stages.map((s, i) => (
-                  <tr key={i} className="border-t border-slate-200 dark:border-slate-800">
+                  <tr key={i} className="border-t border-slate-200">
                     <td className="py-1">{s.stage}</td>
                     <td className="text-slate-500">{s.model}</td>
                     <td className="text-right tabular-nums">
                       {s.input_tokens}/{s.output_tokens}
                       {s.estimated && '*'}
                     </td>
-                    <td className="text-right tabular-nums">{usd(s.cost_usd)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -148,12 +147,12 @@ function Insights({ r }: { r: QueryResponse }) {
       <Card title={`Retrieved chunks (${rt.chunks.length})`}>
         <div className="space-y-2">
           {rt.chunks.map((ch) => (
-            <details key={ch.chunk_id} className="rounded-lg border border-slate-200 p-2 text-sm dark:border-slate-800">
+            <details key={ch.chunk_id} className="rounded-lg border border-slate-200 p-2 text-sm">
               <summary className="cursor-pointer">
                 <strong>[{ch.citation_number}]</strong> {sourceLabel(ch.filename, ch.page)}{' '}
                 <Badge tone="info">{ch.score.toFixed(3)}</Badge> <Badge>{ch.retrieved_by}</Badge>
               </summary>
-              <p className="mt-2 whitespace-pre-wrap text-slate-700 dark:text-slate-300">{ch.text}</p>
+              <p className="mt-2 whitespace-pre-wrap text-slate-700">{ch.text}</p>
             </details>
           ))}
         </div>
@@ -163,5 +162,5 @@ function Insights({ r }: { r: QueryResponse }) {
 }
 
 export default function InsightsPage() {
-  return <TraceView base="insights" render={(r) => <Insights r={r} />} />;
+  return <TraceView base="insights" title="Retrieval Insights" subtitle="How the system judged the question’s difficulty, how many chunks it chose to retrieve, and what it found." render={(r) => <Insights r={r} />} />;
 }

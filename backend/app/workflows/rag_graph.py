@@ -16,6 +16,7 @@ which yields every ablation variant from this one graph.
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -279,9 +280,13 @@ class ProposedRAGPipeline:
     async def _extract_claims(self, state: GraphState) -> dict[str, Any]:
         started = perf_counter()
         config, attempt = state["config"].verification, state["attempts"][-1]
-        claims, fallback = await self.c.extractor.extract(
-            attempt.sentences, max_claims=config.max_claims, max_tokens=config.max_tokens,
-            usage=state["usage"], attempt=attempt.attempt,
+        # The evidence windows do not depend on the claims, so they are embedded while the LLM extracts them.
+        (claims, fallback), _ = await asyncio.gather(
+            self.c.extractor.extract(
+                attempt.sentences, max_claims=config.max_claims, max_tokens=config.max_tokens,
+                usage=state["usage"], attempt=attempt.attempt,
+            ),
+            self.c.verifier.prefetch(state["chunks"], config, state["usage"], state["embedding_cache"]),
         )
         return {"claims": claims, "claims_fallback": fallback, "timings": _with_timing(state, "claim_extraction", started)}
 

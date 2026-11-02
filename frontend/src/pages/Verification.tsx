@@ -8,8 +8,8 @@ function ClaimCard({ claim }: { claim: ClaimVerification }) {
     <div
       className={`rounded-lg border p-3 text-sm ${
         claim.status === 'unsupported'
-          ? 'border-red-300 bg-red-50 dark:border-red-900 dark:bg-red-950/30'
-          : 'border-slate-200 dark:border-slate-800'
+          ? 'border-red-300 bg-red-50'
+          : 'border-slate-200'
       }`}
     >
       <div className="flex flex-wrap items-center gap-2">
@@ -26,7 +26,7 @@ function ClaimCard({ claim }: { claim: ClaimVerification }) {
       </div>
       <p className="mt-2 font-medium">{claim.text}</p>
       {ev && (
-        <div className="mt-2 rounded-md bg-slate-100 p-2 dark:bg-slate-800/60">
+        <div className="mt-2 rounded-md bg-slate-100 p-2">
           <div className="mb-1 text-xs text-slate-500">
             Evidence: [{ev.citation_number}] {sourceLabel(ev.filename, ev.page)} · similarity {ev.similarity.toFixed(3)}
           </div>
@@ -38,9 +38,9 @@ function ClaimCard({ claim }: { claim: ClaimVerification }) {
           </div>
         </div>
       )}
-      {!ev && claim.status === 'unsupported' && <p className="mt-2 text-xs text-red-700 dark:text-red-300">No supporting evidence found in the retrieved passages.</p>}
+      {!ev && claim.status === 'unsupported' && <p className="mt-2 text-xs text-red-700">No supporting evidence found in the retrieved passages.</p>}
       {claim.judge_rationale && (
-        <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-xs text-slate-600">
           Judge: {claim.judge_rationale}
           {claim.judge_quote && (
             <>
@@ -68,13 +68,13 @@ function AttemptCard({ attempt, selected, refinement }: { attempt: Attempt; sele
       }
     >
       {refinement && (
-        <div className="mb-3 rounded-lg border border-violet-300 bg-violet-50 p-2 text-xs dark:border-violet-900 dark:bg-violet-950/30">
+        <div className="mb-3 rounded-lg border border-violet-300 bg-violet-50 p-2 text-xs">
           <strong>Refinement before this attempt:</strong> targeted retrieval for {refinement.targeted_claims.length} claim(s), added{' '}
           {refinement.added_chunk_ids.length} new chunk(s) ({ms(refinement.latency_ms)}).
           {refinement.contradicted_claims.length > 0 && <> Contradicted: {refinement.contradicted_claims.join(' | ')}.</>}
         </div>
       )}
-      <p className="mb-3 whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">{attempt.answer}</p>
+      <p className="mb-3 whitespace-pre-wrap text-sm text-slate-700">{attempt.answer}</p>
       {v ? (
         <>
           <div className="mb-3 grid grid-cols-2 gap-2 md:grid-cols-5">
@@ -109,7 +109,7 @@ function Verification({ r }: { r: QueryResponse }) {
         <p className="font-medium">{r.question}</p>
         <p className="mt-2 whitespace-pre-wrap text-sm">{r.answer}</p>
         {r.uncertainty?.flagged && (
-          <p className="mt-2 rounded-lg border border-amber-400 bg-amber-50 p-2 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+          <p className="mt-2 rounded-lg border border-amber-400 bg-amber-50 p-2 text-sm text-amber-900">
             {r.uncertainty.notice}
           </p>
         )}
@@ -132,5 +132,5 @@ function Verification({ r }: { r: QueryResponse }) {
 }
 
 export default function VerificationPage() {
-  return <TraceView base="verification" render={(r) => <Verification r={r} />} />;
+  return <TraceView base="verification" title="Evidence Verification" subtitle="Every statement in the answer is checked against the passage it cites. Unsupported statements are flagged and trigger a retry." render={(r) => <Verification r={r} />} />;
 }

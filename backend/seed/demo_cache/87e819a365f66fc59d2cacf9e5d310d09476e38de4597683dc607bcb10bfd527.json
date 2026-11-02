@@ -1,0 +1,328 @@
+{
+  "version": 1,
+  "key": "87e819a365f66fc59d2cacf9e5d310d09476e38de4597683dc607bcb10bfd527",
+  "question": "What is the annual budget of the Fenwick Library?",
+  "pipeline": "proposed",
+  "corpus": "default",
+  "overrides": {},
+  "corpus_fingerprint": [
+    "5699ba7ebf9a36384e289223faf2f1963aa57783961b038e93408649a907b7e7",
+    "67fd62ffc60aa43a8e1a9e3431341e8ac0c21de89a4b3959622ad08eab5ddf0c",
+    "6a5ecf9e3460c5455e64a3941c358b58908bebf85949f89cc9087d83f7567813"
+  ],
+  "recorded_at": "2026-11-02T04:25:41.033110Z",
+  "response": {
+    "query_id": "a575f7b337914f02b635694ec78b2cde",
+    "created_at": "2026-11-02T04:25:41.033110Z",
+    "pipeline": "proposed",
+    "variant": {
+      "adaptive": true,
+      "decompose": true,
+      "verify": true
+    },
+    "corpus": "default",
+    "question": "What is the annual budget of the Fenwick Library?",
+    "answer": "The context passages do not provide information about the annual budget of the Fenwick Library. Therefore, I cannot answer the question as the necessary details are missing.",
+    "citations": [],
+    "sentences": [
+      {
+        "index": 0,
+        "text": "The context passages do not provide information about the annual budget of the Fenwick Library.",
+        "citation_numbers": [],
+        "status": null
+      },
+      {
+        "index": 1,
+        "text": "Therefore, I cannot answer the question as the necessary details are missing.",
+        "citation_numbers": [],
+        "status": null
+      }
+    ],
+    "invalid_citations": [],
+    "retrieval": {
+      "strategy": "adaptive",
+      "k_requested": 1,
+      "k_final": 1,
+      "num_retrieved": 1,
+      "latency_ms": 509.93129998096265,
+      "embedding_latency_ms": 507.5086999859195,
+      "search_latency_ms": 2.4225999950431287,
+      "queries": [
+        "What is the annual budget of the Fenwick Library?"
+      ],
+      "confidence": {
+        "score": 0.6724,
+        "top1": 0.5319,
+        "mean": 0.5319,
+        "coverage": 1.0,
+        "uncovered_queries": [],
+        "sufficient": true
+      },
+      "expansions": 0,
+      "chunks": [
+        {
+          "chunk_id": "13558065adfa4578bcd3eb048d347253:00001",
+          "doc_id": "13558065adfa4578bcd3eb048d347253",
+          "filename": "institute_overview.md",
+          "page": null,
+          "chunk_index": 1,
+          "text": "- School of Computing: dean Prof. Tomas Reyes since 2019. The school is based in Aster Hall.\n- School of Energy Systems: dean Prof. Anika Bergström since 2016. The school is based in Birch Pavilion.\n- School of Biomedical Engineering: dean Prof. Samuel Adeyemi since 2021. The school is based in Cedar Centre.\nCampus\n\nThe main campus covers 42 hectares on the northern bank of the river Vell. Aster Hall, the largest\nbuilding, was completed in 2003 and has six floors. Birch Pavilion was completed in 1991. Cedar Centre\nopened together with the School of Biomedical Engineering in 2005.\n\nThe Fenwick Library opened in 1994. It holds about 310,000 volumes and is open 24 hours a day during\nexamination periods.\nStudents and staff\n\nIn the 2024 academic year the institute had 9,400 students, of whom 38 percent were graduate students,\nand 1,150 academic staff. The School of Computing is the largest school, with 4,100 students.",
+          "score": 0.4159712791442871,
+          "rank": 1,
+          "citation_number": 1,
+          "retrieved_by": "original_query"
+        }
+      ]
+    },
+    "complexity": {
+      "label": "simple",
+      "score": 0.02,
+      "k": 1,
+      "information_needs": [
+        "What is the annual budget of the Fenwick Library?"
+      ],
+      "reasoning_type": "lookup",
+      "requires_multiple_sources": false,
+      "llm_label": "simple",
+      "rationale": "The question asks for a single fact regarding the annual budget of a specific library.",
+      "components": {
+        "information_needs": 0.0,
+        "reasoning": 0.0,
+        "multi_source": 0.0,
+        "lexical": 0.1333,
+        "llm_label": 0.0
+      },
+      "lexical": {
+        "comparison_markers": 0.0,
+        "enumeration_markers": 0.0,
+        "nesting_markers": 1.0,
+        "entity_mentions": 2.0,
+        "score": 0.1333
+      },
+      "fallback": false,
+      "latency_ms": 1351.7069999943487
+    },
+    "verification": {
+      "claims": [],
+      "support_score": 1.0,
+      "citation_accuracy": null,
+      "num_supported": 0,
+      "num_partial": 0,
+      "num_unsupported": 0,
+      "passed": true,
+      "abstained": true,
+      "extraction_fallback": false,
+      "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+      "latency_ms": 0.005400012014433742,
+      "timings_ms": {}
+    },
+    "attempts": [
+      {
+        "attempt": 0,
+        "answer": "The context passages do not provide information about the annual budget of the Fenwick Library. Therefore, I cannot answer the question as the necessary details are missing.",
+        "sentences": [
+          {
+            "index": 0,
+            "text": "The context passages do not provide information about the annual budget of the Fenwick Library.",
+            "citation_numbers": [],
+            "status": null
+          },
+          {
+            "index": 1,
+            "text": "Therefore, I cannot answer the question as the necessary details are missing.",
+            "citation_numbers": [],
+            "status": null
+          }
+        ],
+        "invalid_citations": [],
+        "num_context_chunks": 1,
+        "verification": {
+          "claims": [],
+          "support_score": 1.0,
+          "citation_accuracy": null,
+          "num_supported": 0,
+          "num_partial": 0,
+          "num_unsupported": 0,
+          "passed": true,
+          "abstained": true,
+          "extraction_fallback": false,
+          "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+          "latency_ms": 0.005400012014433742,
+          "timings_ms": {}
+        },
+        "latency_ms": 1913.75639999751,
+        "cumulative_latency_ms": 3779.4055999838747,
+        "cumulative_input_tokens": 924,
+        "cumulative_output_tokens": 107,
+        "cumulative_cost_usd": 0.00020136999999999998
+      }
+    ],
+    "selected_attempt": 0,
+    "refinements": [],
+    "uncertainty": {
+      "flagged": false,
+      "notice": null,
+      "unsupported_claims": [],
+      "removed_sentences": []
+    },
+    "usage": {
+      "stages": [
+        {
+          "stage": "complexity_analysis",
+          "model": "gpt-4o-mini",
+          "input_tokens": 345,
+          "output_tokens": 71,
+          "estimated": false,
+          "cost_usd": 9.434999999999999e-05
+        },
+        {
+          "stage": "query_embedding",
+          "model": "text-embedding-3-small",
+          "input_tokens": 11,
+          "output_tokens": 0,
+          "estimated": true,
+          "cost_usd": 2.2e-07
+        },
+        {
+          "stage": "generation",
+          "model": "gpt-4o-mini",
+          "input_tokens": 375,
+          "output_tokens": 31,
+          "estimated": false,
+          "cost_usd": 7.484999999999999e-05
+        },
+        {
+          "stage": "claim_extraction",
+          "model": "gpt-4o-mini",
+          "input_tokens": 193,
+          "output_tokens": 5,
+          "estimated": false,
+          "cost_usd": 3.195e-05
+        }
+      ],
+      "input_tokens": 924,
+      "output_tokens": 107,
+      "cost_usd": 0.00020136999999999998
+    },
+    "timings_ms": {
+      "analyze_query": 1351.7270000011194,
+      "retrieval": 510.0772999867331,
+      "generation": 1043.1225000065751,
+      "claim_extraction": 869.1952000081073,
+      "verification": 0.07929999264888465,
+      "total": 3780.2653999824543
+    },
+    "total_latency_ms": 3780.2653999824543,
+    "models": {
+      "chat": "gpt-4o-mini",
+      "embedding": "text-embedding-3-small",
+      "nli": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+    },
+    "config": {
+      "chunking": {
+        "chunk_size": 1000,
+        "chunk_overlap": 150
+      },
+      "baseline": {
+        "top_k": 5
+      },
+      "generation": {
+        "max_answer_tokens": 700
+      },
+      "proposed": {
+        "adaptive": true,
+        "verify": true
+      },
+      "complexity": {
+        "weights": {
+          "information_needs": 0.35,
+          "reasoning": 0.25,
+          "multi_source": 0.15,
+          "lexical": 0.15,
+          "llm_label": 0.1
+        },
+        "reasoning_scores": {
+          "lookup": 0.0,
+          "aggregation": 0.5,
+          "temporal": 0.5,
+          "comparison": 0.6,
+          "causal": 0.7,
+          "bridge": 1.0
+        },
+        "simple_max": 0.33,
+        "moderate_max": 0.66,
+        "max_tokens": 500
+      },
+      "adaptive": {
+        "k_simple": {
+          "min": 1,
+          "max": 3
+        },
+        "k_moderate": {
+          "min": 4,
+          "max": 7
+        },
+        "k_complex": {
+          "min": 8,
+          "max": 12
+        },
+        "k_cap": 15,
+        "decompose": true,
+        "max_subqueries": 4,
+        "rrf_k": 60,
+        "score_floor": 0.15,
+        "score_ceiling": 0.65,
+        "relevance_threshold": 0.4,
+        "confidence_weight_top1": 0.5,
+        "confidence_weight_mean": 0.2,
+        "confidence_weight_coverage": 0.3,
+        "confidence_threshold": 0.5,
+        "max_expansions": 1,
+        "expansion_step": 3
+      },
+      "verification": {
+        "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+        "window_sentences": 3,
+        "candidate_windows": 3,
+        "support_threshold": 0.75,
+        "contradiction_threshold": 0.75,
+        "partial_threshold": 0.4,
+        "use_llm_judge": true,
+        "pass_support_score": 0.9,
+        "max_claims": 12,
+        "max_retries": 2,
+        "refine_k": 3,
+        "max_tokens": 900
+      },
+      "pricing": {
+        "gpt-4o-mini": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        },
+        "gpt-4o": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        },
+        "gpt-4.1": {
+          "input_per_million": 2.0,
+          "output_per_million": 8.0
+        },
+        "gpt-4.1-mini": {
+          "input_per_million": 0.4,
+          "output_per_million": 1.6
+        },
+        "text-embedding-3-small": {
+          "input_per_million": 0.02,
+          "output_per_million": 0.0
+        },
+        "text-embedding-3-large": {
+          "input_per_million": 0.13,
+          "output_per_million": 0.0
+        }
+      }
+    },
+    "cached": false,
+    "cached_from": null,
+    "served_ms": null
+  }
+}

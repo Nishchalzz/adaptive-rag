@@ -73,11 +73,17 @@ from a language model's prior knowledge. Example questions (simple, moderate, co
 served at `GET /api/demo/questions`. Seeding happens once per data directory; deleted demo documents are not
 re-added. Set `SEED_DEMO_CORPUS=false` to disable it. Regenerate the PDF with `python -m scripts.build_seed_pdf`.
 
+**Demo replay cache.** To make the sample questions answer instantly, `backend/seed/demo_cache/` can hold *real
+recorded runs* of them. A replayed answer is clearly labelled in the UI, keeps its original latency/tokens/cost,
+and has a "Run live instead" button; it is served only while the indexed documents, models and configuration
+are unchanged. Build it from a running backend with `python -m scripts.build_demo_cache` (see
+[docs/approach.md](docs/approach.md#appendix-demo-replay-cache)); `use_cache=false` on a request bypasses it.
+
 ## Configuration
 
 Environment (`.env`, see `.env.example`): `OPENAI_API_KEY`, `CHAT_MODEL`, `EMBEDDING_MODEL`, `DATABASE_URL`
 (defaults to SQLite; PostgreSQL via `postgresql+asyncpg://...`), `DEFAULT_CORPUS`, `JUDGE_MODEL`,
-`EVAL_NLI_MODEL`, `SEED_DEMO_CORPUS`, `PRELOAD_NLI`, `EXPERIMENTS_DIR`.
+`EVAL_NLI_MODEL`, `SEED_DEMO_CORPUS`, `PRELOAD_NLI`, `EXPERIMENTS_DIR`, `DEMO_CACHE_ENABLED`.
 
 Research parameters (`PipelineConfig`, overridable per request, via YAML at `PIPELINE_CONFIG_PATH`, or in
 experiment configs): chunk size/overlap, baseline `top_k`, complexity weights and thresholds, per-label k
