@@ -35,7 +35,7 @@ const json = (body: unknown): RequestInit => ({
 export const api = {
   health: () => request<{ status: string; llm_configured: boolean; nli_models: Record<string, string> }>('/api/health'),
   demoQuestions: () =>
-    request<{ questions: { category: string; question: string }[]; selection_note?: string }>('/api/demo/questions'),
+    request<{ questions: { category: string; question: string; featured?: boolean }[]; selection_note?: string }>('/api/demo/questions'),
   query: (body: QueryBody) => request<QueryResponse>('/api/query', json(body)),
   queries: (limit = 50) => request<QueryLog[]>(`/api/queries?limit=${limit}`),
   queryById: (id: string) => request<QueryResponse>(`/api/queries/${encodeURIComponent(id)}`),

@@ -11,7 +11,7 @@ type Mode = 'proposed' | 'baseline' | 'both';
 export default function Chat() {
   const [question, setQuestion] = useState('');
   const [mode, setMode] = useState<Mode>('proposed');
-  const [demo, setDemo] = useState<{ category: string; question: string }[]>([]);
+  const [demo, setDemo] = useState<{ category: string; question: string; featured?: boolean }[]>([]);
   const [demoNote, setDemoNote] = useState<string | undefined>();
   const proposed = useRun();
   const baseline = useRun();
@@ -132,22 +132,32 @@ export default function Chat() {
           </div>
         </form>
         {demo.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {demo.map((d) => (
-              <button
-                key={d.question}
-                onClick={() => {
-                  setQuestion(d.question);
-                  ask(d.question);
-                }}
-                title={d.category}
-                className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 hover:border-indigo-300 hover:bg-indigo-50"
-              >
-                <span className="mr-1 text-slate-400">{d.category}</span>
-                {d.question.length > 70 ? `${d.question.slice(0, 70)}…` : d.question}
-              </button>
-            ))}
-            {demoNote && <p className="w-full text-xs text-slate-500">Sample questions: {demoNote}</p>}
+          <div className="mt-3 space-y-2">
+            {[
+              { label: 'Main examples', items: demo.filter((d) => d.featured) },
+              { label: 'More examples', items: demo.filter((d) => !d.featured) },
+            ]
+              .filter((row) => row.items.length > 0)
+              .map((row) => (
+                <div key={row.label} className="flex flex-wrap items-center gap-2">
+                  <span className="w-28 shrink-0 text-xs font-medium text-slate-500">{row.label}</span>
+                  {row.items.map((d) => (
+                    <button
+                      key={d.question}
+                      onClick={() => {
+                        setQuestion(d.question);
+                        ask(d.question);
+                      }}
+                      title={d.question}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 hover:border-indigo-300 hover:bg-indigo-50"
+                    >
+                      <span className="mr-1 text-slate-400">{d.category}</span>
+                      {d.question.length > 60 ? `${d.question.slice(0, 60)}…` : d.question}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            {demoNote && <p className="text-xs text-slate-500">Sample questions: {demoNote}</p>}
           </div>
         )}
       </Card>

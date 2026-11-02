@@ -3,31 +3,38 @@
   "questions": [
     {
       "category": "simple",
-      "question": "When was the Halvorsen Institute of Technology founded?"
-    },
-    {
-      "category": "simple",
-      "question": "Who leads the Retrieval and Reasoning Lab?"
-    },
-    {
-      "category": "simple",
-      "question": "How many ECTS credits is the master's thesis worth?"
+      "question": "When was the Halvorsen Institute of Technology founded?",
+      "featured": true
     },
     {
       "category": "moderate",
-      "question": "Which building houses the lab that runs Project Veritas?"
+      "question": "Which building houses the lab that runs Project Veritas?",
+      "featured": true
     },
     {
       "category": "moderate",
-      "question": "Which was founded earlier, the Retrieval and Reasoning Lab or the Neural Interfaces Lab, and by how many years?"
-    },
-    {
-      "category": "complex",
-      "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?"
+      "question": "Which was founded earlier, the Retrieval and Reasoning Lab or the Neural Interfaces Lab, and by how many years?",
+      "featured": true
     },
     {
       "category": "unanswerable",
-      "question": "What is the annual budget of the Fenwick Library?"
+      "question": "What is the annual budget of the Fenwick Library?",
+      "featured": true
+    },
+    {
+      "category": "simple",
+      "question": "Who leads the Retrieval and Reasoning Lab?",
+      "featured": false
+    },
+    {
+      "category": "simple",
+      "question": "How many ECTS credits is the master's thesis worth?",
+      "featured": false
+    },
+    {
+      "category": "complex",
+      "question": "A master's thesis on Project Atlas receives grades of 2 and 4 from its examiners. Who appoints the third examiner, and from which laboratory must the co-supervisor come?",
+      "featured": false
     }
   ],
   "selection_note": "Hand-picked examples where recorded real runs show the proposed system ahead of the baseline (fewer chunks with the same answer, or fewer unsupported claims). They are not a random sample; see docs/experimental_methodology.md for the full benchmark, where results are mixed."
